@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
+PyYAML
+sentence-transformers
+chromadb
+ollama
+azure-search-documents
+azure-storage-blob
+azure-cosmos
+azure-identity
+openai
+requests
+numpy
+pandas

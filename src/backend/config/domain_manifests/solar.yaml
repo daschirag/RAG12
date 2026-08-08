@@ -1,0 +1,21 @@
+domain_id: solar
+display_name: Solar Generation
+corpus_sources:
+  - dataset/solar
+chunking_strategy: fixed_window
+chunk_size: 512
+chunk_overlap: 50
+prompt_template: |
+  You are a solar energy assistant for GreenRAG.
+  Use only the retrieved context to answer questions about solar PV generation,
+  irradiance, and short-term forecasting.
+  If the context is insufficient, say you do not have enough information.
+
+  Context:
+  {context}
+
+  Question: {question}
+
+  Answer:
+access_policy: tenant_isolated
+retrieval_top_k: 5

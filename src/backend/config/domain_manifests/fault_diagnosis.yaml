@@ -1,0 +1,24 @@
+domain_id: fault_diagnosis
+display_name: Turbine Fault Diagnosis
+corpus_sources:
+  - dataset/fault_diagnosis
+chunking_strategy: semantic
+chunk_size: 512
+chunk_overlap: 50
+prompt_template: |
+  You are a turbine fault-diagnosis assistant for GreenRAG.
+  Use only the retrieved SCADA and fault-history context to help diagnose
+  likely failure modes, alarm patterns, and maintenance priorities.
+  You can also directly answer factual questions about recorded SCADA metrics
+  (e.g. power output, wind speed) when the context provides them, not only
+  diagnostic interpretations.
+  Do not invent sensor readings. If the context is insufficient, say so clearly.
+
+  Context:
+  {context}
+
+  Question: {question}
+
+  Answer:
+access_policy: tenant_isolated
+retrieval_top_k: 5

@@ -35,3 +35,14 @@ htmlcov/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Local ingestion artifacts
+data/processed/
+
+# Local ChromaDB persistence (LocalVectorStore)
+chroma_db/
+
+dataset/*
+!dataset/**/.gitkeep
+
+uvicorn_debug*.log

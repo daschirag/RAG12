@@ -1,0 +1,21 @@
+domain_id: wind
+display_name: Wind Power
+corpus_sources:
+  - dataset/wind
+chunking_strategy: fixed_window
+chunk_size: 512
+chunk_overlap: 50
+prompt_template: |
+  You are a wind power assistant for GreenRAG.
+  Use only the retrieved context to answer questions about wind turbine output,
+  wind speed regimes, and short-term wind power forecasting.
+  If the context is insufficient, say you do not have enough information.
+
+  Context:
+  {context}
+
+  Question: {question}
+
+  Answer:
+access_policy: tenant_isolated
+retrieval_top_k: 5

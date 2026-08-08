@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+  GreenRAG console UI — standalone static site (no FastAPI mount).
+  From this directory:  python -m http.server 5500
+  Then open http://127.0.0.1:5500/  (API must be running on :8000)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GreenRAG Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-pip" aria-hidden="true"></span>
+          <h1>GreenRAG</h1>
+        </div>
+        <div id="status-pill" class="status-pill" role="status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="status-label">CHECKING</span>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="rail" aria-label="Domain selectors">
+          <p class="rail-kicker">Domain</p>
+          <div id="domain-switches" class="domain-switches" role="radiogroup" aria-label="Select domain"></div>
+        </aside>
+
+        <main class="main">
+          <section class="console panel" aria-label="Query console">
+            <label class="sr-only" for="query-input">Query</label>
+            <textarea
+              id="query-input"
+              class="query-input"
+              rows="3"
+              spellcheck="false"
+              placeholder="ask about wind speed, power output, or fault patterns..."
+            ></textarea>
+            <div class="console-row">
+              <button id="ask-btn" class="ask-btn" type="button">ASK</button>
+              <p id="console-hint" class="hint">Select a domain and ask a question about its telemetry.</p>
+            </div>
+          </section>
+
+          <section id="readout" class="readout panel" aria-live="polite">
+            <div id="empty-state" class="empty">
+              <p>Select a domain and ask a question about its telemetry.</p>
+            </div>
+
+            <div id="result-view" class="result is-hidden">
+              <div id="viz-slot" class="viz"></div>
+              <p id="metric-value" class="metric-value is-hidden"></p>
+              <div id="answer-body" class="answer-body"></div>
+              <div class="sources">
+                <h2>SOURCES</h2>
+                <div id="sources-list" class="source-chips"></div>
+              </div>
+            </div>
+
+            <div id="error-state" class="error is-hidden" role="alert"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
