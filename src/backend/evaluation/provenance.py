@@ -25,7 +25,8 @@ def _git_commit() -> str:
     except (OSError, subprocess.SubprocessError):
         return "unknown"
     dirty = subprocess.run(
-        ["git", "status", "--porcelain"],
+        # Generated outputs under results/ do not make the code state dirty.
+        ["git", "status", "--porcelain", "--", ".", ":(exclude)results"],
         cwd=PROJECT_ROOT, capture_output=True, text=True, timeout=10,
     ).stdout.strip()
     return out.stdout.strip() + ("-dirty" if dirty else "")
