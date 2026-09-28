@@ -6,7 +6,8 @@ Phase list: `docs/PLAN.md`. Rules: `CLAUDE.md`.
 |---|---|---|---|
 | 0 Setup | done | 38 passed, 0 skipped (with Ollama running) | e043ac1 + Ollama fix commit |
 | A1 Solar preprocessing | done | 19 new (57 total) passed | see git log "A1" |
-| A2-A6 Forecasting | not started | | |
+| A2 Feature engineering | done | 12 new (69 total) passed | 3f2a690, 6063449 + results commit |
+| A3-A6 Forecasting | not started | | |
 | B1-B7 RAG + fault diagnosis | not started | | |
 | C1-C7 Security + trust | not started | | |
 | I1-I5 Integration | not started | | |
@@ -54,6 +55,22 @@ Phase list: `docs/PLAN.md`. Rules: `CLAUDE.md`.
 - Tests: `tests/test_forecasting_preprocess.py` 19 passed, including a prefix-invariance causality test (verified to
   fail on two injected leaks: centered smoothing and whole-series outlier stats). Full suite 57 passed.
 - Design notes: `docs/forecasting.md`.
+
+## A2 - Feature engineering (2026-09-28)
+- A1 reports re-generated from committed code: stamp ca8c808, report/config/package blocks identical to the
+  previous run (commit 40f716c).
+- **Resolution: native 15 min (no resampling). Horizon: 1 hour ahead (4 steps), fixed for all A3 models.**
+  Justification in docs/forecasting.md (34 days is too short to downsample; no NWP data for longer horizons).
+- `src/backend/forecasting/features.py`: origin-indexed rows; features use data <= t (lags 1/3/6/24 steps, same slot
+  yesterday, rolling mean/std over 4 and 16 slots, weather at t, irradiation envelope from previous days, calendar of
+  T). Measured weather at T only as opt-in `oracle_irr_target` (labelled upper bound, off by default).
+- Split by target day: train 21 / val 4 / calib 4 (reserved for A4) / test 5 days. Plant 1 rows
+  1901 / 379 / 384 / 478 (daytime 905 / 188 / 188 / 234).
+- Tests: `tests/test_forecasting_features.py` 12 passed (future-corruption leakage test over 3 seeds + positive
+  control on the oracle feature). Full suite 69 passed. First run had 5 failures: a test-helper dtype bug and a
+  feature-description ordering mismatch; both fixed and re-run.
+- Provenance now ignores results/ when marking code dirty (commit 6063449); A2 results stamped 6063449.
+- Carried into A3: score every model on the same test rows (train-fitted imputation, no row dropping); small test set.
 
 ## Open questions / notes for the user
 - The fault dataset contains wind-turbine faults; the plan's solar-inverter fault list does not match (details in B4).

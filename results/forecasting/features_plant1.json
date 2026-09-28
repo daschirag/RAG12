@@ -1,0 +1,173 @@
+{
+  "summary": {
+    "plant": 1,
+    "rows_total": 3142,
+    "hourly_equivalent_rows": 785,
+    "splits": {
+      "train": {
+        "rows": 1901,
+        "daytime_rows": 905,
+        "first_target": "2020-05-15 01:00:00",
+        "last_target": "2020-06-04 23:45:00"
+      },
+      "val": {
+        "rows": 379,
+        "daytime_rows": 188,
+        "first_target": "2020-06-05 00:00:00",
+        "last_target": "2020-06-08 23:45:00"
+      },
+      "calib": {
+        "rows": 384,
+        "daytime_rows": 188,
+        "first_target": "2020-06-09 00:00:00",
+        "last_target": "2020-06-12 23:45:00"
+      },
+      "test": {
+        "rows": 478,
+        "daytime_rows": 234,
+        "first_target": "2020-06-13 00:00:00",
+        "last_target": "2020-06-17 23:45:00"
+      }
+    },
+    "features": {
+      "ac_now": {
+        "missing_train": 47,
+        "spearman_train_daytime": 0.7297
+      },
+      "ac_lag_1": {
+        "missing_train": 57,
+        "spearman_train_daytime": 0.6656
+      },
+      "ac_lag_3": {
+        "missing_train": 70,
+        "spearman_train_daytime": 0.5352
+      },
+      "ac_lag_6": {
+        "missing_train": 85,
+        "spearman_train_daytime": 0.343
+      },
+      "ac_lag_24": {
+        "missing_train": 130,
+        "spearman_train_daytime": -0.307
+      },
+      "ac_roll_mean_4": {
+        "missing_train": 92,
+        "spearman_train_daytime": 0.6597
+      },
+      "ac_roll_std_4": {
+        "missing_train": 92,
+        "spearman_train_daytime": 0.212
+      },
+      "ac_roll_mean_16": {
+        "missing_train": 269,
+        "spearman_train_daytime": 0.2833
+      },
+      "ac_roll_std_16": {
+        "missing_train": 269,
+        "spearman_train_daytime": 0.3542
+      },
+      "ac_same_slot_yesterday": {
+        "missing_train": 192,
+        "spearman_train_daytime": 0.7563
+      },
+      "irr_now": {
+        "missing_train": 20,
+        "spearman_train_daytime": 0.7318
+      },
+      "irr_smooth_now": {
+        "missing_train": 17,
+        "spearman_train_daytime": 0.6887
+      },
+      "irr_roll_mean_4": {
+        "missing_train": 41,
+        "spearman_train_daytime": 0.6664
+      },
+      "irr_delta_4": {
+        "missing_train": 44,
+        "spearman_train_daytime": 0.3598
+      },
+      "irr_same_slot_yesterday": {
+        "missing_train": 157,
+        "spearman_train_daytime": 0.7436
+      },
+      "irr_envelope_target": {
+        "missing_train": 90,
+        "spearman_train_daytime": 0.8151
+      },
+      "irr_clearness_now": {
+        "missing_train": 1014,
+        "spearman_train_daytime": 0.2246
+      },
+      "ambient_now": {
+        "missing_train": 20,
+        "spearman_train_daytime": 0.2374
+      },
+      "module_now": {
+        "missing_train": 20,
+        "spearman_train_daytime": 0.6348
+      },
+      "module_minus_ambient_now": {
+        "missing_train": 20,
+        "spearman_train_daytime": 0.728
+      },
+      "hour": {
+        "missing_train": 0,
+        "spearman_train_daytime": -0.0281
+      },
+      "tod_sin": {
+        "missing_train": 0,
+        "spearman_train_daytime": 0.0275
+      },
+      "tod_cos": {
+        "missing_train": 0,
+        "spearman_train_daytime": -0.8479
+      },
+      "day": {
+        "missing_train": 0,
+        "spearman_train_daytime": 0.0366
+      },
+      "month": {
+        "missing_train": 0,
+        "spearman_train_daytime": -0.0328
+      },
+      "dayofweek": {
+        "missing_train": 0,
+        "spearman_train_daytime": 0.0399
+      }
+    }
+  },
+  "config": {
+    "horizon": 4,
+    "lags": [
+      1,
+      3,
+      6,
+      24
+    ],
+    "roll_windows": [
+      4,
+      16
+    ],
+    "daytime_envelope": 0.05,
+    "include_oracle_weather": false
+  },
+  "environment": {
+    "timestamp_utc": "2026-09-28T17:28:15+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "6063449",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  }
+}
