@@ -89,10 +89,10 @@
     "smooth_window": 3
   },
   "environment": {
-    "timestamp_utc": "2026-09-28T17:15:17+00:00",
+    "timestamp_utc": "2026-09-28T17:23:52+00:00",
     "python": "3.11.15",
     "platform": "Windows-10-10.0.26200-SP0",
-    "git_commit": "f64e76f-dirty",
+    "git_commit": "ca8c808",
     "packages": {
       "numpy": "2.4.6",
       "pandas": "3.0.5",
