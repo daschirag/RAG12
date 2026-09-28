@@ -14,3 +14,7 @@ openai
 requests
 numpy
 pandas
+xgboost
+matplotlib
+statsmodels
+pytest

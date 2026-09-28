@@ -46,3 +46,19 @@ dataset/*
 !dataset/**/.gitkeep
 
 uvicorn_debug*.log
+
+# Logs, model weights and caches (never commit)
+*.log
+logs/
+models/
+*.pt
+*.pth
+*.ckpt
+*.joblib
+*.pkl
+*.onnx
+*.safetensors
+cache/
+
+# Supervisor planning document (kept local; plan content is in docs/PLAN.md)
+docs/GreenRAG-Sec_Work_Split.docx

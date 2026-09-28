@@ -14,10 +14,19 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from .config import DomainManifest, list_domains, load_manifest
-from .retrieval import get_vector_store
-from .serving import get_generator
-from .serving.router import (
+from .runtime_env import configure_cache_dirs
+
+# Load .env from the project root (two levels above src/backend).
+# Expected keys are documented in .env.example — leave secrets out of git.
+# Loaded before configure_cache_dirs so GREENRAG_CACHE_DIR in .env applies.
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(_PROJECT_ROOT / ".env")
+configure_cache_dirs()
+
+from .config import DomainManifest, list_domains, load_manifest  # noqa: E402
+from .retrieval import get_vector_store  # noqa: E402
+from .serving import get_generator  # noqa: E402
+from .serving.router import (  # noqa: E402
     build_deterministic_numeric_answer,
     build_metric_payload,
     classify_query,
@@ -26,11 +35,6 @@ from .serving.router import (
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# Load .env from the project root (two levels above src/backend).
-# Expected keys are documented in .env.example — leave secrets out of git.
-_PROJECT_ROOT = Path(__file__).resolve().parents[2]
-load_dotenv(_PROJECT_ROOT / ".env")
 
 PROCESSED_ROOT = _PROJECT_ROOT / "data" / "processed"
 
