@@ -57,3 +57,46 @@ statistic is introduced (checked by mutation during A1).
 - **Humidity**: the plan lists humidity, but the dataset has no humidity column. None is invented. An
   external source (e.g. reanalysis data for the plant location) would need the plant coordinates,
   which the dataset does not give, and requires user approval.
+
+## A2 Feature engineering (`src/backend/forecasting/features.py`)
+
+Run: `python -m experiments.features_solar` -> `results/forecasting/features_summary.md`, `features_plant{1,2}.json`.
+
+### Resolution and horizon (fixed for all A3 models)
+- **Resampling interval: none, keep the native 15-min grid.** The record is only 34 days (3264 slots).
+  Hourly resampling would leave 816 rows (about 440 in daylight), too few for the LSTM and the advanced
+  model, and averaging would hide the cloud-driven ramps that make short-term solar forecasting hard.
+- **Horizon: 1 hour ahead (H = 4 steps).** Each row is a forecast origin t (last observed slot); the target
+  is plant AC power at T = t + 1 h. This is an intraday operational horizon (dispatch, reserve). The dataset
+  has no numerical weather forecasts, so at longer horizons predictions collapse to the daily profile.
+- The plan's lags 1/3/6/24 are 15-min steps before the origin (15 min, 45 min, 1.5 h, 6 h). Because solar
+  output is dominated by the daily cycle, `ac_same_slot_yesterday` = y(T - 24 h) is added.
+
+### Information available at the origin
+All features use data at times <= t. The only exceptions are still known at t: calendar features of T
+(deterministic) and `irr_envelope_target`, the maximum irradiation at T's time-of-day slot over days strictly
+before T's date (all <= T - 24 h < t). Rolling windows end at t, which is H steps before the target.
+
+Measured weather at T is future information. It is excluded by default. `FeatureConfig(include_oracle_weather=True)`
+adds `oracle_irr_target`, which is only for a clearly labelled "perfect weather forecast" upper bound.
+
+### Leakage tests (`tests/test_forecasting_features.py`)
+- Target alignment: y(row t) == AC(t + 1 h) exactly; lag and rolling values checked against raw values.
+- Future corruption: every value after a random daytime origin t (3 seeds) is replaced with noise; the
+  features of row t and of every earlier row must be unchanged. The same corruption *does* change
+  `oracle_irr_target`, which shows the test can detect future information.
+- Envelope uses previous days only; split segments are disjoint and ordered.
+
+### Split (by the day of the target time)
+train 21 days (targets 05-15 to 06-04), val 4 (06-05 to 06-08), calib 4 (06-09 to 06-12, reserved for A4
+conformal calibration), test 5 (06-13 to 06-17). Assigning rows by target day means no training target lies
+in a later segment. Plant 1: 1901 / 379 / 384 / 478 rows (daytime 905 / 188 / 188 / 234).
+
+### Constraints carried into A3
+- Some features are missing in part of the training data, e.g. 16-slot rolling stats (269 of 1901 Plant 1 train
+  rows), because a single missing slot blanks the window. All models must be scored on the **same** test rows:
+  models that cannot take NaN get a train-fitted imputer and do not drop rows.
+- `month` has two values (5, 6) and `day` behaves like a trend over 34 days. Both can extrapolate poorly;
+  they are kept as the plan requires, and their effect will show in A3/A5 results.
+- The test set is 5 days (234 daytime rows for Plant 1), so differences between models will carry wide
+  uncertainty; A5 will report this.
