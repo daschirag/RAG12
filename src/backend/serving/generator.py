@@ -148,6 +148,30 @@ def _require_env(name: str) -> str:
     return value
 
 
+def _is_runner_crash(exc: BaseException) -> bool:
+    """True when Ollama's llama-server died while loading the model.
+
+    Seen intermittently on Windows (Ollama 0.34.3, RTX 4050): the runner exits
+    with 0xc0000409 / "CUDA error: shared object initialization failed" during
+    a cold load. The next request spawns a fresh runner and succeeds.
+    """
+    return "llama-server process has terminated" in str(exc)
+
+
+def _ollama_chat(model: str, prompt: str) -> Any:
+    """Call ``ollama.chat``, retrying once if the runner crashed on load."""
+    import ollama
+
+    messages = [{"role": "user", "content": prompt}]
+    try:
+        return ollama.chat(model=model, messages=messages)
+    except ollama.ResponseError as exc:
+        if not _is_runner_crash(exc):
+            raise
+        logger.warning("Ollama runner crashed on load; retrying once: %s", exc)
+        return ollama.chat(model=model, messages=messages)
+
+
 class LocalGenerator(Generator):
     """Local answers via the Ollama Python client."""
 
@@ -166,15 +190,10 @@ class LocalGenerator(Generator):
         domain_manifest: DomainManifest,
         retrieval_mode: str = "semantic",
     ) -> str:
-        import ollama
-
         prompt = build_prompt(
             query, context_chunks, domain_manifest, retrieval_mode=retrieval_mode
         )
-        response = ollama.chat(
-            model=self.model,
-            messages=[{"role": "user", "content": prompt}],
-        )
+        response = _ollama_chat(self.model, prompt)
         # ollama>=0.3 returns an object or dict depending on version.
         message = getattr(response, "message", None)
         if message is not None:
@@ -191,14 +210,9 @@ class LocalGenerator(Generator):
         context_chunks: list[dict[str, Any]],
     ) -> str:
         """Ask Ollama for one interpretive sentence; empty string on failure."""
-        import ollama
-
         prompt = build_numeric_enrichment_prompt(deterministic_answer, context_chunks)
         try:
-            response = ollama.chat(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-            )
+            response = _ollama_chat(self.model, prompt)
         except Exception as exc:  # noqa: BLE001
             logger.warning("Numeric enrichment LLM call failed: %s", exc)
             return ""
