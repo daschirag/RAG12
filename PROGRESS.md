@@ -5,7 +5,8 @@ Phase list: `docs/PLAN.md`. Rules: `CLAUDE.md`.
 | Phase | Status | Tests | Commit |
 |---|---|---|---|
 | 0 Setup | done | 38 passed, 0 skipped (with Ollama running) | e043ac1 + Ollama fix commit |
-| A1-A6 Forecasting | not started | | |
+| A1 Solar preprocessing | done | 19 new (57 total) passed | see git log "A1" |
+| A2-A6 Forecasting | not started | | |
 | B1-B7 RAG + fault diagnosis | not started | | |
 | C1-C7 Security + trust | not started | | |
 | I1-I5 Integration | not started | | |
@@ -36,6 +37,23 @@ Phase list: `docs/PLAN.md`. Rules: `CLAUDE.md`.
   enrichment. Unit tests in `tests/test_generator_retry.py`. The integration test was not changed.
 - After the fix: Ollama test passed on a cold load (9.78s); 10/10 further cold-load runs passed (7.7-27.1s; the 27s
   run may have included a retry, not verifiable from pytest output). Full suite: 38 passed.
+
+## A1 - Solar preprocessing (2026-09-28)
+- `src/backend/forecasting/preprocess.py`: load (explicit timestamp formats) -> duplicates -> time sync (15-min grid,
+  +/-2 min snap) -> plant aggregation (mean over reporting inverters x 22, coverage kept, NaN below 50%) -> physical
+  bounds + night consistency -> causal missing-value handling -> trailing robust-z outlier flags (values kept) ->
+  causal smoothed weather copies. `chronological_split` (whole days) and `TrainOnlyScaler` (fit on train only).
+  `src/backend/evaluation/provenance.py` records package versions + git commit in every report.
+- Run: `python -m experiments.preprocess_solar` -> results/forecasting/preprocessing_{report_plant1,report_plant2}.json,
+  preprocessing_summary.md, preprocessing_plant{1,2}.png. Reports are stamped `f64e76f-dirty` = produced by the
+  uncommitted A1 code that is committed together with them.
+- Measured: Plant 1: 3264 slots, 106 without generation, 82 without weather, 22 night-filled, 118 target NaN,
+  2 outlier flags, DC/AC ratio 10.22 (DC scale inconsistency; DC not used), daytime corr(AC, irradiation) 0.9876.
+  Plant 2: 904 partial-coverage slots, 6 target NaN, 1 night-inconsistent, 10 outlier flags, corr 0.7319.
+  Plant 1 = primary modelling series; Plant 2 = harder secondary series.
+- Tests: `tests/test_forecasting_preprocess.py` 19 passed, including a prefix-invariance causality test (verified to
+  fail on two injected leaks: centered smoothing and whole-series outlier stats). Full suite 57 passed.
+- Design notes: `docs/forecasting.md`.
 
 ## Open questions / notes for the user
 - The fault dataset contains wind-turbine faults; the plan's solar-inverter fault list does not match (details in B4).
