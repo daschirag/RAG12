@@ -1,0 +1,13 @@
+event_id,asset_id,true_component,predicted_top1,predicted_top2,rank_of_true,n_components_ranked,top1_correct,top2_correct
+68,11,transformer,blades_hub_structure,pitch_system,8,10,False,False
+22,21,hydraulic_system,generator_bearing,blades_hub_structure,8,10,False,False
+72,21,gearbox,transformer,generator_bearing,5,10,False,False
+73,0,hydraulic_system,generator_bearing,pitch_system,9,10,False,False
+0,0,generator_bearing,transformer,generator_bearing,2,10,False,True
+26,0,hydraulic_system,transformer,converter,4,10,False,False
+40,10,generator_bearing,hydraulic_system,pitch_system,7,10,False,False
+42,10,hydraulic_system,pitch_system,yaw_system,7,10,False,False
+10,10,gearbox,transformer,pitch_system,7,10,False,False
+45,13,hydraulic_system,pitch_system,transformer,3,10,False,False
+84,13,hydraulic_system,pitch_system,cooling_system,9,10,False,False
+51,21,gearbox,transformer,blades_hub_structure,5,10,False,False

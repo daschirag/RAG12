@@ -1,0 +1,500 @@
+{
+  "environment": {
+    "timestamp_utc": "2026-09-29T17:32:22+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "4e586aa-dirty",
+    "git_dirty_checked": false,
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  },
+  "runs": [
+    {
+      "month": "2018-09",
+      "model": "persistence",
+      "seed": 0,
+      "fit_seconds": 0.1,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "daily_persistence",
+      "seed": 0,
+      "fit_seconds": 0.1,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "random_forest",
+      "seed": 0,
+      "fit_seconds": 47.7,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "random_forest",
+      "seed": 1,
+      "fit_seconds": 47.2,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "random_forest",
+      "seed": 2,
+      "fit_seconds": 48.1,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "xgboost",
+      "seed": 0,
+      "fit_seconds": 81.3,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "xgboost",
+      "seed": 1,
+      "fit_seconds": 76.6,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "xgboost",
+      "seed": 2,
+      "fit_seconds": 73.9,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "lstm",
+      "seed": 0,
+      "fit_seconds": 47.3,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "lstm",
+      "seed": 1,
+      "fit_seconds": 24.8,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "lstm",
+      "seed": 2,
+      "fit_seconds": 12.7,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "tcn",
+      "seed": 0,
+      "fit_seconds": 46.9,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "tcn",
+      "seed": 1,
+      "fit_seconds": 45.8,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "tcn",
+      "seed": 2,
+      "fit_seconds": 17.5,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "xgboost_oracle_weather",
+      "seed": 0,
+      "fit_seconds": 3.3,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "xgboost_oracle_weather",
+      "seed": 1,
+      "fit_seconds": 3.0,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-09",
+      "model": "xgboost_oracle_weather",
+      "seed": 2,
+      "fit_seconds": 2.8,
+      "train_rows": 25305
+    },
+    {
+      "month": "2018-10",
+      "model": "persistence",
+      "seed": 0,
+      "fit_seconds": 0.0,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "daily_persistence",
+      "seed": 0,
+      "fit_seconds": 0.0,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "random_forest",
+      "seed": 0,
+      "fit_seconds": 14.0,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "random_forest",
+      "seed": 1,
+      "fit_seconds": 14.1,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "random_forest",
+      "seed": 2,
+      "fit_seconds": 13.8,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "xgboost",
+      "seed": 0,
+      "fit_seconds": 17.4,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "xgboost",
+      "seed": 1,
+      "fit_seconds": 15.0,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "xgboost",
+      "seed": 2,
+      "fit_seconds": 15.3,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "lstm",
+      "seed": 0,
+      "fit_seconds": 10.8,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "lstm",
+      "seed": 1,
+      "fit_seconds": 20.9,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "lstm",
+      "seed": 2,
+      "fit_seconds": 16.8,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "tcn",
+      "seed": 0,
+      "fit_seconds": 24.2,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "tcn",
+      "seed": 1,
+      "fit_seconds": 22.3,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "tcn",
+      "seed": 2,
+      "fit_seconds": 36.6,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "xgboost_oracle_weather",
+      "seed": 0,
+      "fit_seconds": 2.6,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "xgboost_oracle_weather",
+      "seed": 1,
+      "fit_seconds": 2.5,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-10",
+      "model": "xgboost_oracle_weather",
+      "seed": 2,
+      "fit_seconds": 2.2,
+      "train_rows": 29769
+    },
+    {
+      "month": "2018-11",
+      "model": "persistence",
+      "seed": 0,
+      "fit_seconds": 0.0,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "daily_persistence",
+      "seed": 0,
+      "fit_seconds": 0.0,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "random_forest",
+      "seed": 0,
+      "fit_seconds": 15.9,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "random_forest",
+      "seed": 1,
+      "fit_seconds": 16.3,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "random_forest",
+      "seed": 2,
+      "fit_seconds": 16.4,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "xgboost",
+      "seed": 0,
+      "fit_seconds": 58.7,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "xgboost",
+      "seed": 1,
+      "fit_seconds": 76.3,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "xgboost",
+      "seed": 2,
+      "fit_seconds": 73.2,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "lstm",
+      "seed": 0,
+      "fit_seconds": 53.6,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "lstm",
+      "seed": 1,
+      "fit_seconds": 40.2,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "lstm",
+      "seed": 2,
+      "fit_seconds": 50.7,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "tcn",
+      "seed": 0,
+      "fit_seconds": 129.4,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "tcn",
+      "seed": 1,
+      "fit_seconds": 77.0,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "tcn",
+      "seed": 2,
+      "fit_seconds": 38.4,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "xgboost_oracle_weather",
+      "seed": 0,
+      "fit_seconds": 2.7,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "xgboost_oracle_weather",
+      "seed": 1,
+      "fit_seconds": 3.3,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-11",
+      "model": "xgboost_oracle_weather",
+      "seed": 2,
+      "fit_seconds": 2.6,
+      "train_rows": 34194
+    },
+    {
+      "month": "2018-12",
+      "model": "persistence",
+      "seed": 0,
+      "fit_seconds": 0.0,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "daily_persistence",
+      "seed": 0,
+      "fit_seconds": 0.0,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "random_forest",
+      "seed": 0,
+      "fit_seconds": 18.5,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "random_forest",
+      "seed": 1,
+      "fit_seconds": 18.6,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "random_forest",
+      "seed": 2,
+      "fit_seconds": 18.6,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "xgboost",
+      "seed": 0,
+      "fit_seconds": 85.5,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "xgboost",
+      "seed": 1,
+      "fit_seconds": 119.6,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "xgboost",
+      "seed": 2,
+      "fit_seconds": 231.8,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "lstm",
+      "seed": 0,
+      "fit_seconds": 96.3,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "lstm",
+      "seed": 1,
+      "fit_seconds": 45.2,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "lstm",
+      "seed": 2,
+      "fit_seconds": 16.5,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "tcn",
+      "seed": 0,
+      "fit_seconds": 76.1,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "tcn",
+      "seed": 1,
+      "fit_seconds": 28.1,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "tcn",
+      "seed": 2,
+      "fit_seconds": 52.0,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "xgboost_oracle_weather",
+      "seed": 0,
+      "fit_seconds": 3.5,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "xgboost_oracle_weather",
+      "seed": 1,
+      "fit_seconds": 3.2,
+      "train_rows": 38194
+    },
+    {
+      "month": "2018-12",
+      "model": "xgboost_oracle_weather",
+      "seed": 2,
+      "fit_seconds": 3.5,
+      "train_rows": 38194
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+farm,asset_id,event_id,event_start,event_end,primary_component,all_components,event_description,source_row
+A,11,68,2023-07-28 13:20:00,2023-08-11 13:10:00,transformer,transformer,Transformer failure,0
+A,21,22,2023-08-12 09:50:00,2023-08-19 10:00:00,hydraulic_system,hydraulic_system,Hydraulic group,1
+A,21,72,2023-10-10 08:40:00,2023-10-17 08:40:00,gearbox,gearbox,Gearbox failure,2
+A,0,73,2023-06-10 11:40:00,2023-06-17 11:40:00,hydraulic_system,hydraulic_system,Hydraulic group,3
+A,0,0,2023-08-06 06:10:00,2023-08-20 06:10:00,generator_bearing,generator_bearing,Generator bearing failure,4
+A,0,26,2023-10-12 10:20:00,2023-10-19 10:20:00,hydraulic_system,hydraulic_system,Hydraulic group,5
+A,10,40,2022-12-26 00:00:00,2023-01-26 13:00:00,generator_bearing,generator_bearing,Generator bearing failure,6
+A,10,42,2023-09-09 15:50:00,2023-09-16 15:50:00,hydraulic_system,hydraulic_system,Hydraulic group,7
+A,10,10,2023-10-11 08:40:00,2023-10-18 08:40:00,gearbox,gearbox,Gearbox failure,8
+A,13,45,2023-04-19 18:10:00,2023-04-26 18:10:00,hydraulic_system,hydraulic_system,Hydraulic group,9
+A,13,84,2023-09-05 15:30:00,2023-09-12 15:30:00,hydraulic_system,hydraulic_system,Hydraulic group,10
+A,21,51,2023-10-06 01:30:00,2023-10-17 16:10:00,gearbox,gearbox,Gearbox bearings damaged,21
+B,14,34,2023-08-24 00:00:00,2023-09-15 00:00:00,transformer,transformer,high temperature in transformer cell,0
+B,13,7,2023-07-01 00:00:00,2023-08-01 00:00:00,transformer,transformer,high temperature in transformer cell,1
+B,6,53,2023-12-26 16:40:00,2024-02-06 16:30:00,rotor_main_bearing,rotor_main_bearing,Rotor Bearing 2 - Damage,2
+B,7,27,2023-09-01 00:00:00,2023-11-01 00:00:00,rotor_main_bearing,rotor_main_bearing,Turbine is stopped due to a main bearing damage,3
+B,11,19,2023-02-03 00:00:00,2023-02-23 00:00:00,transformer,transformer,high temperature in transformer cell,4
+B,12,77,2023-06-01 00:00:00,2023-07-31 00:00:00,rotor_main_bearing,rotor_main_bearing,Turbine is in standstill since 01.08 due to rotorbearing damage.,5
+C,50,55,2023-10-29 11:30:00,2023-11-15 15:30:00,communication_control,communication_control;blades_hub_structure;pitch_system,Harting plug Nacelle/HUB damaged + NCR20_HUB: Wiring blade control system,0
+C,38,81,2023-11-16 01:30:00,2023-11-18 14:00:00,converter,converter,"Converter Failure from 17.11 12:30 - 18.11. 13:57, Fuse Filter Supply ",1
+C,21,47,2023-12-22 15:00:00,2023-12-27 13:40:00,rotor_brake,rotor_brake;hydraulic_system,"Failure due to Rotorbrake and Hydraulic problemes - Hydraulic pump A disabeld, 2h later turbine back in production - Analysis indicates a longer anomaly in temp_hydraulic_oil_tank_1_average until 15.01.2024 which is neither confirmed nor refuted.",2
+C,2,12,2023-06-27 00:00:00,2023-07-19 15:00:00,gearbox,gearbox;rotor_brake;yaw_system,"10115 : Oil level error, two-pump mode + Oil Leakage Gear Oil Supply + 12019: Rotor brake B cannot be closed + P20_yaw carbon brush damaged",3
+C,34,4,2023-07-31 10:00:00,2023-08-19 10:00:00,pitch_system,pitch_system,23020 : Axis 3 not ready-to-operate,4
+C,34,18,2023-09-13 00:00:00,2023-09-16 23:50:00,electrical_auxiliary,electrical_auxiliary;rotor_brake,We had some failures (störung 24VAC Versorgung Rotorbremse) on the 16th in the afternoon. From 17th onwards a longer standstill where we don't know the root cause to. ,5
+C,52,28,2023-05-28 13:00:00,2023-06-17 20:30:00,blades_hub_structure,blades_hub_structure;hydraulic_system,P20_spinner_carbonbrush defekt + P20_Accumulators_hydraulic system,6
+C,52,39,2023-10-19 13:00:00,2023-10-24 15:20:00,electrical_auxiliary,electrical_auxiliary;gearbox;cooling_system,15004 : Safety chain relay open + 93005 : Gear oil cooler bypass valve,7
+C,12,66,2023-01-17 00:00:00,2023-01-23 13:00:00,pitch_system,pitch_system,"Pitchfailure - defect Beckhoffcard, Axis 2, rectified on 23/01 - Anomalie liegt aber länger an als der Fehler, Batterien waren ok",8
+C,12,15,2023-02-06 00:00:00,2023-02-23 00:00:00,pitch_system,pitch_system,Randomn small failures regarding pitch resulting in a longer standstill due to a defect pitch encoder (26/02),9
+C,15,78,2023-07-30 13:00:00,2023-08-01 14:30:00,blades_hub_structure,blades_hub_structure;rotor_brake,P20_Grounding role brake disc + P20_cover-lightning-main-cabinet-hub,10
+C,16,79,2023-07-26 09:00:00,2023-07-28 09:00:00,communication_control,communication_control,Communication fault BK1120 in NC300,11
+C,16,30,2023-12-15 00:00:00,2024-01-06 15:40:00,pitch_system,pitch_system,Pitch failure - defect fan on pitch motor,12
+C,43,33,2023-08-26 13:00:00,2023-09-15 13:00:00,blades_hub_structure,blades_hub_structure,P20_Blade3_Grease Collector missing,13
+C,43,11,2023-10-17 12:30:00,2023-11-08 10:30:00,electrical_auxiliary,electrical_auxiliary;blades_hub_structure,P20_DGUV-v3 RCD 28F1 NC310 defective + 0 : P20_Blades_Cabinet Caps missing,14
+C,44,44,2023-08-03 14:00:00,2023-10-08 02:20:00,cooling_system,cooling_system,Valve in water cooling system was left in wrong position after maintenance actions on 05-08-2020,15
+C,33,49,2023-04-01 00:00:00,2023-04-05 03:30:00,gearbox,gearbox,Failure 2023-04-05 03:30 - defective coupling between gear oil pump and motor,16
+C,35,31,2023-01-18 00:00:00,2023-01-25 02:00:00,communication_control,communication_control;pitch_system,Communication and Pitchfailure - slip ring and Beckhoff card,17
+C,35,67,2023-02-02 00:00:00,2023-04-01 00:00:00,transformer,transformer,Turbine has some issues with overpressure on the main transformer,18
+C,55,9,2023-08-05 07:30:00,2023-08-26 09:30:00,yaw_system,yaw_system,PENDING19_PREV_YAW_Grease pump defective,19
+C,42,91,2023-10-12 09:30:00,2023-11-01 12:00:00,pitch_system,pitch_system,23020 : Axis 3 not ready-to-operate,20
+C,32,5,2023-02-02 00:00:00,2023-02-05 15:00:00,electrical_auxiliary,electrical_auxiliary,WEC in failure - current measurement own consumption,21
+C,56,90,2023-08-10 15:00:00,2023-08-22 17:30:00,communication_control,communication_control,COMMUNICATION FAULT BK1120 IN NC300 A2,22
+C,23,70,2023-11-10 14:00:00,2023-11-30 17:30:00,pitch_system,pitch_system,"21002 : Axis 1 DC-link voltage low, batt",23
+C,53,35,2023-09-24 00:00:00,2023-09-30 09:00:00,converter,converter,"Turbine had several short standstills (max 8min) with failure ""Schwingungen Umrichter Drehmomenten Level 1""",24
+C,53,16,2023-12-23 00:00:00,2024-01-06 23:50:00,pitch_system,pitch_system,WEC in failure - hub battery charger defect,25
+C,53,76,2023-01-08 00:00:00,2023-01-09 16:50:00,pitch_system,pitch_system,WEC in failure with pitch battery issues - rewiring,26

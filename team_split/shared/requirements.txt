@@ -1,0 +1,26 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
+PyYAML
+sentence-transformers
+chromadb
+ollama
+azure-search-documents
+azure-storage-blob
+azure-cosmos
+azure-identity
+openai
+requests
+numpy
+pandas
+xgboost
+matplotlib
+statsmodels
+pytest
+pydantic-settings
+httpx
+scikit-learn
+torch
+# docs screenshots only (uses the installed Chrome/Edge, no browser download): scripts/capture_screenshots.py
+playwright

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--
+  GreenRAG console UI — standalone static site (no FastAPI mount).
+  From this directory:  python -m http.server 5500
+  Then open http://127.0.0.1:5500/  (API must be running on :8000)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GreenRAG Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-pip" aria-hidden="true"></span>
+          <h1>GreenRAG</h1>
+        </div>
+        <div id="status-pill" class="status-pill" role="status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="status-label">CHECKING</span>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="rail" aria-label="Domain selectors">
+          <p class="rail-kicker">Domain</p>
+          <div id="domain-switches" class="domain-switches" role="radiogroup" aria-label="Select domain"></div>
+        </aside>
+
+        <main class="main">
+          <section class="console panel" aria-label="Query console">
+            <label class="sr-only" for="query-input">Query</label>
+            <textarea
+              id="query-input"
+              class="query-input"
+              rows="3"
+              spellcheck="false"
+              placeholder="ask about wind speed, power output, or fault patterns..."
+            ></textarea>
+            <div class="console-row">
+              <button id="ask-btn" class="ask-btn" type="button">ASK</button>
+              <p id="console-hint" class="hint">Select a domain and ask a question about its telemetry.</p>
+            </div>
+          </section>
+
+          <section id="readout" class="readout panel" aria-live="polite">
+            <div id="empty-state" class="empty">
+              <p>Select a domain and ask a question about its telemetry.</p>
+            </div>
+
+            <div id="result-view" class="result is-hidden">
+              <div id="viz-slot" class="viz"></div>
+              <p id="metric-value" class="metric-value is-hidden"></p>
+              <div id="answer-body" class="answer-body"></div>
+              <div class="sources">
+                <h2>SOURCES</h2>
+                <div id="sources-list" class="source-chips"></div>
+              </div>
+            </div>
+
+            <div id="error-state" class="error is-hidden" role="alert"></div>
+          </section>
+
+          <section class="console panel assistant" aria-label="GreenRAG-Sec assistant">
+            <div class="assistant-head">
+              <h2>ASSISTANT</h2>
+              <p class="hint">POST /assistant: question, forecast or diagnosis, with the trust decision (config F).</p>
+            </div>
+            <label class="sr-only" for="assistant-input">Message</label>
+            <textarea id="assistant-input" class="query-input" rows="2" spellcheck="false"
+              placeholder="e.g. What should be checked when the pitch system reports a battery fault?"></textarea>
+            <div class="assistant-fields">
+              <label>Config
+                <select id="assistant-config">
+                  <option value="F" selected>F full GreenRAG-Sec</option>
+                  <option value="E">E +fault diagnosis</option>
+                  <option value="D">D +forecasting</option>
+                  <option value="C">C hybrid RAG</option>
+                  <option value="B">B basic RAG</option>
+                  <option value="A">A LLM only</option>
+                </select>
+              </label>
+              <label>Asset
+                <select id="assistant-asset">
+                  <option value="solar_plant1">solar_plant1</option>
+                  <option value="solar_plant2">solar_plant2</option>
+                  <option value="wind_t1">wind_t1</option>
+                </select>
+              </label>
+              <label>Forecast origin
+                <input id="assistant-origin" type="text" placeholder="2020-06-17T11:00" />
+              </label>
+              <label>Confidence
+                <select id="assistant-confidence">
+                  <option value="0.8">0.80</option>
+                  <option value="0.9" selected>0.90</option>
+                  <option value="0.95">0.95</option>
+                </select>
+              </label>
+              <label>Event id
+                <input id="assistant-event" type="number" min="0" placeholder="73" />
+              </label>
+            </div>
+            <div class="console-row">
+              <button id="assistant-btn" class="ask-btn" type="button">RUN</button>
+              <p id="assistant-hint" class="hint">An origin routes to a forecast, an event id to a diagnosis.</p>
+            </div>
+          </section>
+
+          <section id="assistant-result" class="readout panel is-hidden" aria-live="polite">
+            <div id="trust-card" class="trust-card is-hidden">
+              <span id="decision-badge" class="decision-badge">-</span>
+              <div class="trust-score-wrap">
+                <p class="trust-kicker">TRUST SCORE</p>
+                <p id="trust-score" class="trust-score">-</p>
+              </div>
+              <div id="trust-components" class="trust-components"></div>
+              <ul id="trust-reasons" class="trust-reasons"></ul>
+            </div>
+            <p id="trust-none" class="hint is-hidden">No trust decision in this config (only F runs the decision engine).</p>
+            <div id="forecast-chart" class="forecast-chart is-hidden"></div>
+            <div id="diagnosis-card" class="diagnosis-card is-hidden"></div>
+            <div id="assistant-text" class="answer-body"></div>
+            <p id="assistant-meta" class="hint"></p>
+            <div id="assistant-error" class="error is-hidden" role="alert"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

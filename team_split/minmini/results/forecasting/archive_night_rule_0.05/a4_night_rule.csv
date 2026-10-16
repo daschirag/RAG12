@@ -1,0 +1,37 @@
+plant,rule,model,seed,val_mae
+1,envelope<=0.05 (A3 default),xgboost,0,1668.4150258084387
+1,envelope<=0.05 (A3 default),xgboost,1,1660.2476215059744
+1,envelope<=0.05 (A3 default),xgboost,2,1680.9069286816793
+1,envelope<=0.05 (A3 default),random_forest,0,1655.725496705085
+1,envelope<=0.05 (A3 default),random_forest,1,1660.199925248175
+1,envelope<=0.05 (A3 default),random_forest,2,1653.7325336764134
+1,envelope<=0 (strict),xgboost,0,1659.4424616326562
+1,envelope<=0 (strict),xgboost,1,1651.608906006647
+1,envelope<=0 (strict),xgboost,2,1670.7238492194083
+1,envelope<=0 (strict),random_forest,0,1639.9437309829073
+1,envelope<=0 (strict),random_forest,1,1644.5497042660238
+1,envelope<=0 (strict),random_forest,2,1638.5223703377608
+1,no night rule,xgboost,0,1688.7693060216734
+1,no night rule,xgboost,1,1685.7606772038107
+1,no night rule,xgboost,2,1685.2751190592442
+1,no night rule,random_forest,0,1640.0889973321384
+1,no night rule,random_forest,1,1644.668300239884
+1,no night rule,random_forest,2,1638.5797673125405
+2,envelope<=0.05 (A3 default),xgboost,0,1167.3016410661355
+2,envelope<=0.05 (A3 default),xgboost,1,1141.0816620100347
+2,envelope<=0.05 (A3 default),xgboost,2,1146.5643831012596
+2,envelope<=0.05 (A3 default),random_forest,0,1106.4725051204548
+2,envelope<=0.05 (A3 default),random_forest,1,1105.7208607767932
+2,envelope<=0.05 (A3 default),random_forest,2,1096.7215103375709
+2,envelope<=0 (strict),xgboost,0,1172.954290035854
+2,envelope<=0 (strict),xgboost,1,1146.1040173547842
+2,envelope<=0 (strict),xgboost,2,1154.0752232638472
+2,envelope<=0 (strict),random_forest,0,1093.7128867606605
+2,envelope<=0 (strict),random_forest,1,1092.7587447496844
+2,envelope<=0 (strict),random_forest,2,1083.986850746004
+2,no night rule,xgboost,0,1178.9876840298277
+2,no night rule,xgboost,1,1159.3737964011607
+2,no night rule,xgboost,2,1164.045308996273
+2,no night rule,random_forest,0,1093.7204850693495
+2,no night rule,random_forest,1,1092.7664738144622
+2,no night rule,random_forest,2,1083.9995477033829

@@ -1,0 +1,7 @@
+endpoint,items_compared,exact_match,exact_match_rate,answer_text_match,same_sources_or_evidence,same_decision,same_component,same_evidence
+query,64,64,1.0,,,,,
+ask,16,6,0.375,6.0,16.0,,,
+secure_ask,10,10,1.0,10.0,10.0,,,
+decision,10,10,1.0,10.0,10.0,10.0,,
+diagnose,5,5,1.0,,,,5.0,5.0
+forecast,50,50,1.0,,,,,

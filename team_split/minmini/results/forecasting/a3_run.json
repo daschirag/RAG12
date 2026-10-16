@@ -1,0 +1,566 @@
+{
+  "runs": [
+    {
+      "plant": 1,
+      "model": "persistence",
+      "seed": 0,
+      "notes": "baseline: y(t)",
+      "fit_seconds": 0.0,
+      "params": {}
+    },
+    {
+      "plant": 1,
+      "model": "daily_persistence",
+      "seed": 0,
+      "notes": "baseline: y(T-24h)",
+      "fit_seconds": 0.01,
+      "params": {}
+    },
+    {
+      "plant": 1,
+      "model": "random_forest",
+      "seed": 0,
+      "notes": "",
+      "fit_seconds": 10.3,
+      "params": {
+        "max_depth": 12,
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "plant": 1,
+      "model": "random_forest",
+      "seed": 1,
+      "notes": "",
+      "fit_seconds": 9.15,
+      "params": {
+        "max_depth": null,
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "plant": 1,
+      "model": "random_forest",
+      "seed": 2,
+      "notes": "",
+      "fit_seconds": 8.55,
+      "params": {
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 5
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost",
+      "seed": 0,
+      "notes": "",
+      "fit_seconds": 2.75,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 226
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost",
+      "seed": 1,
+      "notes": "",
+      "fit_seconds": 2.09,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 189
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost",
+      "seed": 2,
+      "notes": "",
+      "fit_seconds": 3.34,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 259
+      }
+    },
+    {
+      "plant": 1,
+      "model": "lstm",
+      "seed": 0,
+      "notes": "",
+      "fit_seconds": 74.32,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 64,
+        "n_parameters": 6625
+      }
+    },
+    {
+      "plant": 1,
+      "model": "lstm",
+      "seed": 1,
+      "notes": "",
+      "fit_seconds": 54.17,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 47,
+        "n_parameters": 6625
+      }
+    },
+    {
+      "plant": 1,
+      "model": "lstm",
+      "seed": 2,
+      "notes": "",
+      "fit_seconds": 41.9,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 30,
+        "n_parameters": 6625
+      }
+    },
+    {
+      "plant": 1,
+      "model": "tcn",
+      "seed": 0,
+      "notes": "advanced temporal model",
+      "fit_seconds": 82.87,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 16,
+        "n_parameters": 24065
+      }
+    },
+    {
+      "plant": 1,
+      "model": "tcn",
+      "seed": 1,
+      "notes": "advanced temporal model",
+      "fit_seconds": 84.67,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 17,
+        "n_parameters": 24065
+      }
+    },
+    {
+      "plant": 1,
+      "model": "tcn",
+      "seed": 2,
+      "notes": "advanced temporal model",
+      "fit_seconds": 66.73,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 8,
+        "n_parameters": 24065
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost_no_day_month",
+      "seed": 0,
+      "notes": "ablation: drop day/month",
+      "fit_seconds": 3.36,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 226
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost_no_day_month",
+      "seed": 1,
+      "notes": "ablation: drop day/month",
+      "fit_seconds": 1.78,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 194
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost_no_day_month",
+      "seed": 2,
+      "notes": "ablation: drop day/month",
+      "fit_seconds": 2.63,
+      "params": {
+        "learning_rate": 0.1,
+        "max_depth": 5,
+        "best_iteration": 343
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost_oracle_weather",
+      "seed": 0,
+      "notes": "UPPER BOUND ONLY: uses measured irradiation at T (future), not deployable",
+      "fit_seconds": 4.41,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 504
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost_oracle_weather",
+      "seed": 1,
+      "notes": "UPPER BOUND ONLY: uses measured irradiation at T (future), not deployable",
+      "fit_seconds": 3.31,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 542
+      }
+    },
+    {
+      "plant": 1,
+      "model": "xgboost_oracle_weather",
+      "seed": 2,
+      "notes": "UPPER BOUND ONLY: uses measured irradiation at T (future), not deployable",
+      "fit_seconds": 3.17,
+      "params": {
+        "learning_rate": 0.1,
+        "max_depth": 5,
+        "best_iteration": 204
+      }
+    },
+    {
+      "plant": 2,
+      "model": "persistence",
+      "seed": 0,
+      "notes": "baseline: y(t)",
+      "fit_seconds": 0.01,
+      "params": {}
+    },
+    {
+      "plant": 2,
+      "model": "daily_persistence",
+      "seed": 0,
+      "notes": "baseline: y(T-24h)",
+      "fit_seconds": 0.01,
+      "params": {}
+    },
+    {
+      "plant": 2,
+      "model": "random_forest",
+      "seed": 0,
+      "notes": "",
+      "fit_seconds": 9.78,
+      "params": {
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "plant": 2,
+      "model": "random_forest",
+      "seed": 1,
+      "notes": "",
+      "fit_seconds": 9.48,
+      "params": {
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "plant": 2,
+      "model": "random_forest",
+      "seed": 2,
+      "notes": "",
+      "fit_seconds": 9.53,
+      "params": {
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost",
+      "seed": 0,
+      "notes": "",
+      "fit_seconds": 1.78,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 217
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost",
+      "seed": 1,
+      "notes": "",
+      "fit_seconds": 1.85,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 244
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost",
+      "seed": 2,
+      "notes": "",
+      "fit_seconds": 1.76,
+      "params": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "best_iteration": 77
+      }
+    },
+    {
+      "plant": 2,
+      "model": "lstm",
+      "seed": 0,
+      "notes": "",
+      "fit_seconds": 34.87,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 19,
+        "n_parameters": 6625
+      }
+    },
+    {
+      "plant": 2,
+      "model": "lstm",
+      "seed": 1,
+      "notes": "",
+      "fit_seconds": 31.61,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 16,
+        "n_parameters": 6625
+      }
+    },
+    {
+      "plant": 2,
+      "model": "lstm",
+      "seed": 2,
+      "notes": "",
+      "fit_seconds": 27.17,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 10,
+        "n_parameters": 6625
+      }
+    },
+    {
+      "plant": 2,
+      "model": "tcn",
+      "seed": 0,
+      "notes": "advanced temporal model",
+      "fit_seconds": 67.79,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 7,
+        "n_parameters": 24065
+      }
+    },
+    {
+      "plant": 2,
+      "model": "tcn",
+      "seed": 1,
+      "notes": "advanced temporal model",
+      "fit_seconds": 64.44,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 5,
+        "n_parameters": 24065
+      }
+    },
+    {
+      "plant": 2,
+      "model": "tcn",
+      "seed": 2,
+      "notes": "advanced temporal model",
+      "fit_seconds": 63.96,
+      "params": {
+        "lookback": 24,
+        "hidden": 32,
+        "lr": 0.001,
+        "batch_size": 64,
+        "max_epochs": 300,
+        "patience": 25,
+        "weight_decay": 0.0001,
+        "best_epoch": 5,
+        "n_parameters": 24065
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost_no_day_month",
+      "seed": 0,
+      "notes": "ablation: drop day/month",
+      "fit_seconds": 3.13,
+      "params": {
+        "learning_rate": 0.1,
+        "max_depth": 5,
+        "best_iteration": 168
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost_no_day_month",
+      "seed": 1,
+      "notes": "ablation: drop day/month",
+      "fit_seconds": 1.81,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 177
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost_no_day_month",
+      "seed": 2,
+      "notes": "ablation: drop day/month",
+      "fit_seconds": 1.8,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 223
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost_oracle_weather",
+      "seed": 0,
+      "notes": "UPPER BOUND ONLY: uses measured irradiation at T (future), not deployable",
+      "fit_seconds": 1.74,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 163
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost_oracle_weather",
+      "seed": 1,
+      "notes": "UPPER BOUND ONLY: uses measured irradiation at T (future), not deployable",
+      "fit_seconds": 2.0,
+      "params": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 196
+      }
+    },
+    {
+      "plant": 2,
+      "model": "xgboost_oracle_weather",
+      "seed": 2,
+      "notes": "UPPER BOUND ONLY: uses measured irradiation at T (future), not deployable",
+      "fit_seconds": 1.94,
+      "params": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "best_iteration": 83
+      }
+    }
+  ],
+  "environment": {
+    "timestamp_utc": "2026-09-28T20:12:09+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "4e586aa-dirty",
+    "git_dirty_checked": false,
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "horizon_steps": 4
+}

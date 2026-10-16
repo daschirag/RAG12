@@ -1,0 +1,45 @@
+{
+  "report": {
+    "raw_rows": 50530,
+    "duplicate_rows_removed": 0,
+    "conflicting_keys_removed": 0,
+    "offgrid_snapped": 0,
+    "offgrid_dropped": 0,
+    "grid_start": "2018-01-01 00:00:00",
+    "grid_end": "2018-12-31 23:50:00",
+    "grid_slots": 52560,
+    "slots_missing": 2030,
+    "longest_gap": "4 days 08:20:00",
+    "negative_clipped": 57,
+    "bound_violations": {
+      "ac_power_kw": 0,
+      "wind_speed": 0,
+      "wind_dir": 0,
+      "theoretical_power": 0
+    },
+    "weather_ffilled": 53,
+    "target_missing_final": 2030,
+    "turbine_down_flagged": 1343,
+    "stat_outliers_flagged": 4737
+  },
+  "environment": {
+    "timestamp_utc": "2026-09-29T17:32:33+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "4e586aa-dirty",
+    "git_dirty_checked": false,
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local ingestion artifacts
+data/processed/
+
+# Local ChromaDB persistence (LocalVectorStore)
+chroma_db/
+
+dataset/*
+!dataset/**/.gitkeep
+
+uvicorn_debug*.log
+
+# Logs, model weights and caches (never commit)
+*.log
+logs/
+models/
+*.pt
+*.pth
+*.ckpt
+*.joblib
+*.pkl
+*.onnx
+*.safetensors
+cache/
+
+# Supervisor planning document (kept local; plan content is in docs/PLAN.md)
+docs/GreenRAG-Sec_Work_Split.docx
+.env.azure

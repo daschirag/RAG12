@@ -1,0 +1,41 @@
+{
+  "original_items": 60,
+  "process_items": 80,
+  "v2": {
+    "n": 140,
+    "unparsed": 0,
+    "by_kind": {
+      "changed_number": {
+        "n": 20,
+        "accuracy": 1.0
+      },
+      "input_false": {
+        "n": 18,
+        "accuracy": 1.0
+      },
+      "input_true": {
+        "n": 13,
+        "accuracy": 1.0
+      },
+      "other_component": {
+        "n": 20,
+        "accuracy": 1.0
+      },
+      "process_false": {
+        "n": 17,
+        "accuracy": 1.0
+      },
+      "process_true": {
+        "n": 32,
+        "accuracy": 0.34375
+      },
+      "supported": {
+        "n": 20,
+        "accuracy": 1.0
+      }
+    },
+    "true_positive_rate": 0.676923076923077,
+    "true_negative_rate": 1.0,
+    "balanced_accuracy": 0.8384615384615385
+  }
+}

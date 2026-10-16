@@ -1,0 +1,110 @@
+{
+  "report": {
+    "plant": 2,
+    "raw_generation_rows": 67698,
+    "raw_weather_rows": 3259,
+    "duplicate_rows_removed": {
+      "generation": 0,
+      "weather": 0
+    },
+    "conflicting_keys_removed": {
+      "generation": 0,
+      "weather": 0
+    },
+    "offgrid_snapped": {
+      "generation": 0,
+      "weather": 0
+    },
+    "offgrid_dropped": {
+      "generation": 0,
+      "weather": 0
+    },
+    "grid_start": "2020-05-15 00:00:00",
+    "grid_end": "2020-06-17 23:45:00",
+    "grid_slots": 3264,
+    "slots_without_generation": 5,
+    "slots_without_weather": 5,
+    "slots_partial_coverage": 904,
+    "slots_low_coverage_target_nan": 0,
+    "dc_ac_ratio_median": 1.022,
+    "dc_scale_suspect": false,
+    "bound_violations": {
+      "ac_power_kw": 0,
+      "irradiation": 0,
+      "ambient_temp": 0,
+      "module_temp": 0
+    },
+    "night_inconsistent": 1,
+    "target_night_filled": 0,
+    "weather_ffilled": {
+      "irradiation": 5,
+      "ambient_temp": 5,
+      "module_temp": 5
+    },
+    "weather_still_missing": {
+      "irradiation": 0,
+      "ambient_temp": 0,
+      "module_temp": 0
+    },
+    "target_missing_final": 6,
+    "stat_outliers_flagged": 10,
+    "noise_mean_abs_diff": {
+      "irradiation": {
+        "raw": 0.036764,
+        "smooth": 0.022784
+      },
+      "ambient_temp": {
+        "raw": 0.30004,
+        "smooth": 0.251755
+      },
+      "module_temp": {
+        "raw": 1.112579,
+        "smooth": 0.810066
+      }
+    }
+  },
+  "config": {
+    "sync_tolerance": "0 days 00:02:00",
+    "n_inverters": 22,
+    "min_inverter_coverage": 0.5,
+    "inverter_ac_max_kw": 1500.0,
+    "irradiation_range": [
+      0.0,
+      1.5
+    ],
+    "ambient_range": [
+      -10.0,
+      60.0
+    ],
+    "module_range": [
+      -10.0,
+      90.0
+    ],
+    "night_ac_tolerance_kw": 1.0,
+    "weather_ffill_limit": 2,
+    "daytime_irradiation": 0.1,
+    "stat_window": "7D",
+    "stat_min_periods": 20,
+    "stat_z_threshold": 5.0,
+    "smooth_window": 3
+  },
+  "environment": {
+    "timestamp_utc": "2026-09-28T17:23:52+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "ca8c808",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  }
+}

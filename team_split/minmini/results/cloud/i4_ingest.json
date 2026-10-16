@@ -1,0 +1,24 @@
+{
+  "timestamp_utc": "2026-10-16T14:45:46Z",
+  "chunks_uploaded": {
+    "solar": 296,
+    "wind": 110,
+    "fault_diagnosis": 130,
+    "knowledge_base": 210
+  },
+  "azure_index": "greenrag",
+  "azure_document_count": 746,
+  "azure_per_domain": {
+    "solar": 296,
+    "wind": 110,
+    "fault_diagnosis": 130,
+    "knowledge_base": 210
+  },
+  "local_chroma_per_domain": {
+    "solar": 296,
+    "fault_diagnosis": 130,
+    "wind": 110,
+    "knowledge_base": 210
+  },
+  "embedding": "all-MiniLM-L6-v2 (local, 384-d) for both"
+}

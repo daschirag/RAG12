@@ -1,0 +1,32 @@
+{
+  "environment": {
+    "timestamp_utc": "2026-09-29T18:30:18+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "4e586aa-dirty",
+    "git_dirty_checked": false,
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  },
+  "reliability": {
+    "detector": "logistic_regression",
+    "metric": "event_auc",
+    "value": 0.742,
+    "ci95_low": 0.5,
+    "ci95_high": 0.95,
+    "n_events": 22,
+    "protocol": "leave-one-asset-out, Wind Farm A, 22 events (B4)"
+  },
+  "total_seconds": 243.7
+}

@@ -1,0 +1,116 @@
+{
+  "capture": {
+    "environment": {
+      "timestamp_utc": "2026-10-15T12:09:19+00:00",
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "git_commit": "4e586aa-dirty",
+      "git_dirty_checked": false,
+      "packages": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.5",
+        "scikit-learn": "1.9.0",
+        "xgboost": "3.2.0",
+        "torch": "2.13.0",
+        "statsmodels": "0.15.0",
+        "matplotlib": "3.11.2",
+        "sentence-transformers": "5.7.0",
+        "chromadb": "1.5.9",
+        "fastapi": "0.141.1",
+        "pydantic": "2.13.4"
+      }
+    },
+    "generator": "qwen2.5:7b-instruct",
+    "temperature": 0,
+    "llm_seed": 0,
+    "reload_every_items": 60,
+    "seconds_this_session": 1156.3,
+    "raw_file": "c6_raw_qwen2.5-7b-instruct.jsonl"
+  },
+  "heldout": {
+    "environment": {
+      "timestamp_utc": "2026-10-16T10:27:32+00:00",
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "git_commit": "4e586aa-dirty",
+      "git_dirty_checked": false,
+      "packages": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.5",
+        "scikit-learn": "1.9.0",
+        "xgboost": "3.2.0",
+        "torch": "2.13.0",
+        "statsmodels": "0.15.0",
+        "matplotlib": "3.11.2",
+        "sentence-transformers": "5.7.0",
+        "chromadb": "1.5.9",
+        "fastapi": "0.141.1",
+        "pydantic": "2.13.4"
+      }
+    },
+    "generator": "qwen2.5:7b-instruct",
+    "temperature": 0,
+    "llm_seed": 0,
+    "reload_every_llm_items": 30,
+    "seconds_this_session": 906.2,
+    "raw_file": "c6_heldout_raw_qwen2.5-7b-instruct.jsonl"
+  },
+  "judge": {
+    "environment": {
+      "timestamp_utc": "2026-10-16T10:29:52+00:00",
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "git_commit": "4e586aa-dirty",
+      "git_dirty_checked": false,
+      "packages": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.5",
+        "scikit-learn": "1.9.0",
+        "xgboost": "3.2.0",
+        "torch": "2.13.0",
+        "statsmodels": "0.15.0",
+        "matplotlib": "3.11.2",
+        "sentence-transformers": "5.7.0",
+        "chromadb": "1.5.9",
+        "fastapi": "0.141.1",
+        "pydantic": "2.13.4"
+      }
+    },
+    "generator": "qwen2.5:7b-instruct",
+    "temperature": 0,
+    "llm_seed": 0,
+    "reload_every_llm_items": 30,
+    "seconds_this_session": 123.8,
+    "raw_file": "c6_judgements.jsonl",
+    "judge": "qwen2.5:7b-instruct"
+  },
+  "telemetry": {
+    "environment": {
+      "timestamp_utc": "2026-10-16T10:35:01+00:00",
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "git_commit": "4e586aa-dirty",
+      "git_dirty_checked": false,
+      "packages": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.5",
+        "scikit-learn": "1.9.0",
+        "xgboost": "3.2.0",
+        "torch": "2.13.0",
+        "statsmodels": "0.15.0",
+        "matplotlib": "3.11.2",
+        "sentence-transformers": "5.7.0",
+        "chromadb": "1.5.9",
+        "fastapi": "0.141.1",
+        "pydantic": "2.13.4"
+      }
+    },
+    "generator": "qwen2.5:7b-instruct",
+    "temperature": 0,
+    "llm_seed": 0,
+    "reload_every_llm_items": 0,
+    "seconds_this_session": 288.4,
+    "slots_file": "c6_telemetry_slots.csv",
+    "llm": "none"
+  }
+}
