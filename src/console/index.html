@@ -1,0 +1,56 @@
+<!doctype html>
+<!--
+  GreenRAG-Sec console: single-page app, no build step.
+  Run: uvicorn src.backend.main:app   then open http://127.0.0.1:8000/console/
+  (Served by the API itself, so it is same-origin. To use another API: ?api=http://host:port)
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GreenRAG-Sec Console</title>
+  <meta name="description" content="Local, security-aware assistant for renewable-energy operations.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%230ca30c'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4.5v6c0 5-3.4 8.6-8 9.5-4.6-.9-8-4.5-8-9.5v-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12.5l2.6 2.6L16 9.7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="brand-name">GreenRAG-Sec</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Console pages" id="tabs">
+      <button role="tab" id="tab-assistant" aria-controls="page-assistant" data-page="assistant">Assistant</button>
+      <button role="tab" id="tab-forecast" aria-controls="page-forecast" data-page="forecast">Forecast</button>
+      <button role="tab" id="tab-diagnosis" aria-controls="page-diagnosis" data-page="diagnosis">Fault diagnosis</button>
+      <button role="tab" id="tab-lab" aria-controls="page-lab" data-page="lab">Security lab</button>
+      <button role="tab" id="tab-results" aria-controls="page-results" data-page="results">Results</button>
+      <button role="tab" id="tab-about" aria-controls="page-about" data-page="about">About</button>
+    </nav>
+    <div class="status-group" aria-live="polite">
+      <span class="pill" id="mode-pill" title="From GET /system/status">mode: checking</span>
+      <button class="pill pill-button" id="ready-pill" title="GET /ready - click for details" data-state="checking">
+        <span class="dot" aria-hidden="true"></span><span id="ready-label">checking</span>
+      </button>
+      <button class="icon-button" id="theme-toggle" aria-label="Toggle colour theme" title="Toggle colour theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+  <div class="warm-banner" id="warm-banner" hidden>
+    <span class="spinner" aria-hidden="true"></span>
+    <span id="warm-text">Loading models in the background (cold start is about 100 s)...</span>
+  </div>
+  <main id="main" tabindex="-1">
+    <section role="tabpanel" id="page-assistant" aria-labelledby="tab-assistant" class="page" hidden></section>
+    <section role="tabpanel" id="page-forecast" aria-labelledby="tab-forecast" class="page" hidden></section>
+    <section role="tabpanel" id="page-diagnosis" aria-labelledby="tab-diagnosis" class="page" hidden></section>
+    <section role="tabpanel" id="page-lab" aria-labelledby="tab-lab" class="page" hidden></section>
+    <section role="tabpanel" id="page-results" aria-labelledby="tab-results" class="page" hidden></section>
+    <section role="tabpanel" id="page-about" aria-labelledby="tab-about" class="page" hidden></section>
+  </main>
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

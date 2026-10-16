@@ -1,0 +1,4 @@
+method,chunks,mean_chars,median_chars,max_chars
+fixed_size,248,569.8,637,799
+semantic,370,365.6,292,990
+metadata_aware,222,761.8,801,1167

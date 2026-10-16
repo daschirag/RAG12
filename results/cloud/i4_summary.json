@@ -1,0 +1,188 @@
+{
+  "meta": {
+    "local": [
+      {
+        "meta": true,
+        "mode": "local",
+        "ready": "ready",
+        "warmup_s": 71.8,
+        "cloud": {
+          "backend_mode": "local",
+          "embedding_provider": "local",
+          "generator_provider": "ollama",
+          "kb_source": "local",
+          "search_host": "",
+          "search_index": "",
+          "storage_host": "",
+          "key_vault_host": "",
+          "appinsights_enabled": false
+        },
+        "ts": "2026-10-16T14:55:20Z"
+      }
+    ],
+    "azure": [
+      {
+        "meta": true,
+        "mode": "azure",
+        "ready": "ready",
+        "warmup_s": 72.5,
+        "cloud": {
+          "backend_mode": "azure",
+          "embedding_provider": "local",
+          "generator_provider": "ollama",
+          "kb_source": "blob",
+          "search_host": "greenragsec-srch-ymjvr.search.windows.net",
+          "search_index": "greenrag",
+          "storage_host": "greenragsecymjvr.blob.core.windows.net",
+          "key_vault_host": "greenragsec-kv-ymjvr.vault.azure.net",
+          "appinsights_enabled": true
+        },
+        "ts": "2026-10-16T14:58:47Z"
+      }
+    ]
+  },
+  "latency": [
+    {
+      "endpoint": "query",
+      "local_requests": 192,
+      "local_ok": 192,
+      "local_median_ms": 36.3,
+      "local_p95_ms": 41.1,
+      "azure_requests": 192,
+      "azure_ok": 192,
+      "azure_median_ms": 456.0,
+      "azure_p95_ms": 523.325
+    },
+    {
+      "endpoint": "ask",
+      "local_requests": 16,
+      "local_ok": 16,
+      "local_median_ms": 1919.25,
+      "local_p95_ms": 5279.75,
+      "azure_requests": 16,
+      "azure_ok": 16,
+      "azure_median_ms": 3495.7,
+      "azure_p95_ms": 5418.9
+    },
+    {
+      "endpoint": "secure_ask",
+      "local_requests": 10,
+      "local_ok": 10,
+      "local_median_ms": 1087.85,
+      "local_p95_ms": 2325.455,
+      "azure_requests": 10,
+      "azure_ok": 10,
+      "azure_median_ms": 1062.1000000000001,
+      "azure_p95_ms": 2286.2250000000004
+    },
+    {
+      "endpoint": "decision",
+      "local_requests": 10,
+      "local_ok": 10,
+      "local_median_ms": 935.0500000000001,
+      "local_p95_ms": 2255.4249999999997,
+      "azure_requests": 10,
+      "azure_ok": 10,
+      "azure_median_ms": 944.75,
+      "azure_p95_ms": 2262.0399999999995
+    },
+    {
+      "endpoint": "diagnose",
+      "local_requests": 5,
+      "local_ok": 5,
+      "local_median_ms": 7551.6,
+      "local_p95_ms": 7873.16,
+      "azure_requests": 5,
+      "azure_ok": 5,
+      "azure_median_ms": 7518.9,
+      "azure_p95_ms": 7872.8
+    },
+    {
+      "endpoint": "forecast",
+      "local_requests": 150,
+      "local_ok": 150,
+      "local_median_ms": 26.7,
+      "local_p95_ms": 50.25499999999997,
+      "azure_requests": 150,
+      "azure_ok": 150,
+      "azure_median_ms": 23.35,
+      "azure_p95_ms": 46.039999999999985
+    }
+  ],
+  "equivalence": [
+    {
+      "endpoint": "query",
+      "items_compared": 64,
+      "exact_match": 64,
+      "exact_match_rate": 1.0,
+      "answer_text_match": NaN,
+      "same_sources_or_evidence": NaN,
+      "same_decision": NaN,
+      "same_component": NaN,
+      "same_evidence": NaN
+    },
+    {
+      "endpoint": "ask",
+      "items_compared": 16,
+      "exact_match": 6,
+      "exact_match_rate": 0.375,
+      "answer_text_match": 6.0,
+      "same_sources_or_evidence": 16.0,
+      "same_decision": NaN,
+      "same_component": NaN,
+      "same_evidence": NaN
+    },
+    {
+      "endpoint": "secure_ask",
+      "items_compared": 10,
+      "exact_match": 10,
+      "exact_match_rate": 1.0,
+      "answer_text_match": 10.0,
+      "same_sources_or_evidence": 10.0,
+      "same_decision": NaN,
+      "same_component": NaN,
+      "same_evidence": NaN
+    },
+    {
+      "endpoint": "decision",
+      "items_compared": 10,
+      "exact_match": 10,
+      "exact_match_rate": 1.0,
+      "answer_text_match": 10.0,
+      "same_sources_or_evidence": 10.0,
+      "same_decision": 10.0,
+      "same_component": NaN,
+      "same_evidence": NaN
+    },
+    {
+      "endpoint": "diagnose",
+      "items_compared": 5,
+      "exact_match": 5,
+      "exact_match_rate": 1.0,
+      "answer_text_match": NaN,
+      "same_sources_or_evidence": NaN,
+      "same_decision": NaN,
+      "same_component": 5.0,
+      "same_evidence": 5.0
+    },
+    {
+      "endpoint": "forecast",
+      "items_compared": 50,
+      "exact_match": 50,
+      "exact_match_rate": 1.0,
+      "answer_text_match": NaN,
+      "same_sources_or_evidence": NaN,
+      "same_decision": NaN,
+      "same_component": NaN,
+      "same_evidence": NaN
+    }
+  ],
+  "query": {
+    "queries": 64,
+    "same_order": 64,
+    "same_set": 64,
+    "mean_jaccard": 1.0,
+    "ndcg5_local": 0.6143239803131149,
+    "ndcg5_azure": 0.6143239803131149
+  }
+}

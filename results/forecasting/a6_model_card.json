@@ -1,0 +1,182 @@
+{
+  "environment": {
+    "timestamp_utc": "2026-09-29T17:34:54+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "4e586aa-dirty",
+    "git_dirty_checked": false,
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  },
+  "model_dir": "D:\\Rag\\GreenRAG_Azure_Cloud_Project_2026\\models\\forecasting",
+  "assets": {
+    "solar_plant1": {
+      "artifact": "solar_plant1.joblib",
+      "kind": "solar",
+      "segments": {
+        "train": [
+          "2020-05-15",
+          "2020-06-09"
+        ],
+        "val": [
+          "2020-06-10",
+          "2020-06-13"
+        ],
+        "calib": [
+          "2020-06-14",
+          "2020-06-17"
+        ]
+      },
+      "night_threshold": 0.0,
+      "capacity_kw": 33000.0,
+      "cqr_offsets_kw": {
+        "0.8": {
+          "True": 338.00885873125117,
+          "False": 0.0
+        },
+        "0.9": {
+          "True": 185.78646776250025,
+          "False": 0.0
+        },
+        "0.95": {
+          "True": 228.24457303125018,
+          "False": 0.0
+        }
+      },
+      "trained_at_utc": "2026-09-29T17:35:02+00:00",
+      "seed": 0,
+      "method": "cqr_mondrian",
+      "point_params": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 148
+      },
+      "quantile_params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 389
+      },
+      "calib_rows": {
+        "daylight": 187,
+        "night": 195
+      }
+    },
+    "solar_plant2": {
+      "artifact": "solar_plant2.joblib",
+      "kind": "solar",
+      "segments": {
+        "train": [
+          "2020-05-15",
+          "2020-06-09"
+        ],
+        "val": [
+          "2020-06-10",
+          "2020-06-13"
+        ],
+        "calib": [
+          "2020-06-14",
+          "2020-06-17"
+        ]
+      },
+      "night_threshold": 0.0,
+      "capacity_kw": 33000.0,
+      "cqr_offsets_kw": {
+        "0.8": {
+          "True": 356.6664276413694,
+          "False": 0.0
+        },
+        "0.9": {
+          "True": 82.79471633184494,
+          "False": 0.0
+        },
+        "0.95": {
+          "True": -624.6301057942708,
+          "False": -5.7219399423047435e-06
+        }
+      },
+      "trained_at_utc": "2026-09-29T17:35:07+00:00",
+      "seed": 0,
+      "method": "cqr_mondrian",
+      "point_params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 179
+      },
+      "quantile_params": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 219
+      },
+      "calib_rows": {
+        "daylight": 192,
+        "night": 192
+      }
+    },
+    "wind_t1": {
+      "artifact": "wind_t1.joblib",
+      "kind": "wind",
+      "segments": {
+        "train": [
+          "2018-01-01",
+          "2018-10-31"
+        ],
+        "val": [
+          "2018-11-01",
+          "2018-11-30"
+        ],
+        "calib": [
+          "2018-12-01",
+          "2018-12-31"
+        ]
+      },
+      "night_threshold": null,
+      "capacity_kw": 3780.0,
+      "cqr_offsets_kw": {
+        "0.8": {
+          "low": 0.0,
+          "mid": 19.219726562494998,
+          "high": 32.061035156245
+        },
+        "0.9": {
+          "low": 0.0,
+          "mid": 15.345214843744998,
+          "high": 16.518066406244998
+        },
+        "0.95": {
+          "low": 0.0,
+          "mid": 18.44921875,
+          "high": 8.539306640625
+        }
+      },
+      "trained_at_utc": "2026-09-29T17:36:52+00:00",
+      "seed": 0,
+      "method": "cqr_mondrian",
+      "point_params": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "best_iteration": 81
+      },
+      "quantile_params": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "best_iteration": 401
+      },
+      "calib_rows": {
+        "low": 1937,
+        "mid": 1934,
+        "high": 576
+      }
+    }
+  }
+}

@@ -1,13 +1,26 @@
-"""Azure vector store: Azure OpenAI embeddings + Azure AI Search."""
+"""Azure vector store: Azure AI Search + embeddings from local MiniLM (plan A) or Azure OpenAI.
+
+Plan A (deployed 2026-10-16): AI Search Free holds the vectors; embeddings are computed locally with the same
+all-MiniLM-L6-v2 model as the local store, so local and Azure retrieval differ only in the index engine.
+Azure OpenAI embeddings are used only when EMBEDDING_PROVIDER resolves to ``azure_openai``.
+
+Index design: ONE index (``AZURE_SEARCH_INDEX``) for all domains, filtered by ``domain_id``. The Free tier allows
+3 indexes and there are 4 domains. Document keys are URL-safe base64 of ``domain|chunk_id`` because AI Search keys
+may not contain ':' (knowledge-base chunk ids do); the original chunk id is kept in its own field.
+
+The Search admin key comes from AZURE_SEARCH_API_KEY or Key Vault (``search-admin-key``), never from a file.
+"""
 
 from __future__ import annotations
 
+import base64
 import json
 import logging
 import os
 import re
-from typing import Any
+from typing import Any, Callable
 
+from ..settings import get_settings
 from .base import VectorStore
 from .metrics import (
     NUMERIC_METRIC_FIELDS,
@@ -17,17 +30,11 @@ from .metrics import (
 
 logger = logging.getLogger(__name__)
 
-# text-embedding-3-small default dimensionality
-EMBEDDING_DIMENSIONS = 1536
+OPENAI_DIMENSIONS = 1536            # text-embedding-3-small
+LOCAL_DIMENSIONS = 384              # all-MiniLM-L6-v2
+LOCAL_MODEL = "all-MiniLM-L6-v2"
 
-_REQUIRED_ENV = (
-    "AZURE_OPENAI_ENDPOINT",
-    "AZURE_OPENAI_API_KEY",
-    "AZURE_OPENAI_DEPLOYMENT",
-    "AZURE_SEARCH_ENDPOINT",
-    "AZURE_SEARCH_API_KEY",
-    "AZURE_SEARCH_INDEX",
-)
+_OPENAI_REQUIRED = ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_API_KEY", "AZURE_OPENAI_DEPLOYMENT")
 
 
 def _require_env(name: str) -> str:
@@ -36,9 +43,7 @@ def _require_env(name: str) -> str:
     if not value:
         raise RuntimeError(
             f"Missing required Azure configuration: {name} is unset or empty. "
-            f"Set it in your .env (see .env.example). "
-            f"BACKEND_MODE=azure needs: {', '.join(_REQUIRED_ENV)}."
-        )
+            f"Set it in your .env (see .env.example).")
     return value
 
 
@@ -46,265 +51,190 @@ def _sanitize_index_name(name: str) -> str:
     """Azure AI Search index names: lowercase letters, digits, dashes only."""
     cleaned = re.sub(r"[^a-z0-9-]", "-", name.lower())
     cleaned = re.sub(r"-+", "-", cleaned).strip("-")
-    return cleaned or "greentrag"
+    return cleaned or "greenrag"
+
+
+def doc_key(domain_id: str, chunk_id: str) -> str:
+    """AI Search document key (letters, digits, '-', '_', '=' only)."""
+    return base64.urlsafe_b64encode(f"{domain_id}|{chunk_id}".encode("utf-8")).decode("ascii")
+
+
+def _odata(value: str) -> str:
+    return value.replace("'", "''")
 
 
 class AzureVectorStore(VectorStore):
-    """Production backend: Azure OpenAI embeddings + Azure AI Search indexes."""
+    """BACKEND_MODE=azure vector store. ``embed`` (texts -> vectors) and ``search_client`` are injectable for tests."""
 
-    def __init__(self) -> None:
-        # Validate all keys up front so failures are explicit, not SDK-cryptic.
-        self.openai_endpoint = _require_env("AZURE_OPENAI_ENDPOINT")
-        self.openai_api_key = _require_env("AZURE_OPENAI_API_KEY")
-        self.openai_deployment = _require_env("AZURE_OPENAI_DEPLOYMENT")
-        self.search_endpoint = _require_env("AZURE_SEARCH_ENDPOINT")
-        self.search_api_key = _require_env("AZURE_SEARCH_API_KEY")
-        self.search_index_prefix = _require_env("AZURE_SEARCH_INDEX")
-
+    def __init__(self, embed: Callable[[list[str]], list[list[float]]] | None = None) -> None:
+        s = get_settings()
+        if not s.azure_search_endpoint:
+            raise RuntimeError("Missing required Azure configuration: AZURE_SEARCH_ENDPOINT is unset or empty. "
+                               "Set it in your .env (see .env.example).")
+        if not s.azure_search_index:
+            raise RuntimeError("Missing required Azure configuration: AZURE_SEARCH_INDEX is unset or empty.")
+        self.search_endpoint = s.azure_search_endpoint
+        self.index_name = _sanitize_index_name(s.azure_search_index)
+        self.embedding_provider = s.embeddings
+        if self.embedding_provider == "azure_openai":
+            self.openai_endpoint = _require_env("AZURE_OPENAI_ENDPOINT")
+            self.openai_api_key = _require_env("AZURE_OPENAI_API_KEY")
+            self.openai_deployment = _require_env("AZURE_OPENAI_DEPLOYMENT")
+            self.dimensions = OPENAI_DIMENSIONS
+        else:
+            self.dimensions = LOCAL_DIMENSIONS
+        self._embed_override = embed
         self._openai = None
         self._index_client = None
+        self._client = None
+        self._index_ready = False
 
-    def _get_openai(self):
-        if self._openai is None:
-            from openai import AzureOpenAI
+    # -- clients ---------------------------------------------------------------
+    def _credential(self):
+        from azure.core.credentials import AzureKeyCredential
 
-            self._openai = AzureOpenAI(
-                api_key=self.openai_api_key,
-                api_version="2024-02-01",
-                azure_endpoint=self.openai_endpoint,
-            )
-        return self._openai
+        from ..cloud.secrets import get_secret
+
+        return AzureKeyCredential(get_secret("search_api_key"))
 
     def _get_index_client(self):
         if self._index_client is None:
-            from azure.core.credentials import AzureKeyCredential
             from azure.search.documents.indexes import SearchIndexClient
 
-            self._index_client = SearchIndexClient(
-                endpoint=self.search_endpoint,
-                credential=AzureKeyCredential(self.search_api_key),
-            )
+            self._index_client = SearchIndexClient(endpoint=self.search_endpoint, credential=self._credential())
         return self._index_client
 
-    def _index_name(self, domain_id: str) -> str:
-        """One Search index per domain: ``{AZURE_SEARCH_INDEX}-{domain_id}``."""
-        return _sanitize_index_name(f"{self.search_index_prefix}-{domain_id}")
+    def _search_client(self):
+        if self._client is None:
+            from azure.search.documents import SearchClient
 
-    def _ensure_index(self, domain_id: str) -> str:
-        """Create the domain index if missing; return its name."""
+            self._client = SearchClient(endpoint=self.search_endpoint, index_name=self.index_name,
+                                        credential=self._credential())
+        return self._client
+
+    def _embed_texts(self, texts: list[str]) -> list[list[float]]:
+        if not texts:
+            return []
+        if self._embed_override is not None:
+            return [list(map(float, v)) for v in self._embed_override(texts)]
+        if self.embedding_provider == "local":
+            from .local_store import _get_embedding_model
+
+            return _get_embedding_model(LOCAL_MODEL).encode(texts, show_progress_bar=False).tolist()
+        if self._openai is None:
+            from openai import AzureOpenAI
+
+            self._openai = AzureOpenAI(api_key=self.openai_api_key, api_version="2024-02-01",
+                                       azure_endpoint=self.openai_endpoint)
+        response = self._openai.embeddings.create(model=self.openai_deployment, input=texts)
+        return [list(item.embedding) for item in sorted(response.data, key=lambda item: item.index)]
+
+    # -- index -----------------------------------------------------------------
+    def index_fields(self) -> list:
         from azure.search.documents.indexes.models import (
-            HnswAlgorithmConfiguration,
             SearchableField,
             SearchField,
             SearchFieldDataType,
-            SearchIndex,
             SimpleField,
+        )
+
+        fields = [
+            SimpleField(name="id", type=SearchFieldDataType.String, key=True),
+            SimpleField(name="chunk_id", type=SearchFieldDataType.String),
+            SearchableField(name="text", type=SearchFieldDataType.String),
+            SimpleField(name="metadata", type=SearchFieldDataType.String),
+            SimpleField(name="domain_id", type=SearchFieldDataType.String, filterable=True),
+            SearchField(name="embedding", type=SearchFieldDataType.Collection(SearchFieldDataType.Single),
+                        searchable=True, vector_search_dimensions=self.dimensions,
+                        vector_search_profile_name="greenrag-vector-profile"),
+        ]
+        for metric_name in sorted(NUMERIC_METRIC_FIELDS):
+            fields.append(SimpleField(name=metric_name, type=SearchFieldDataType.Double, filterable=True,
+                                      sortable=True))
+        return fields
+
+    def _ensure_index(self) -> str:
+        if self._index_ready:
+            return self.index_name
+        from azure.search.documents.indexes.models import (
+            HnswAlgorithmConfiguration,
+            SearchIndex,
             VectorSearch,
             VectorSearchProfile,
         )
 
-        index_name = self._index_name(domain_id)
         client = self._get_index_client()
-        existing = {idx.name for idx in client.list_indexes()}
-        if index_name in existing:
-            return index_name
+        if self.index_name not in {idx.name for idx in client.list_indexes()}:
+            vector_search = VectorSearch(
+                algorithms=[HnswAlgorithmConfiguration(name="greenrag-hnsw")],
+                profiles=[VectorSearchProfile(name="greenrag-vector-profile",
+                                              algorithm_configuration_name="greenrag-hnsw")])
+            client.create_index(SearchIndex(name=self.index_name, fields=self.index_fields(),
+                                            vector_search=vector_search))
+            logger.info("Created Azure AI Search index '%s' (%d-dim vectors).", self.index_name, self.dimensions)
+        self._index_ready = True
+        return self.index_name
 
-        fields = [
-            SimpleField(name="chunk_id", type=SearchFieldDataType.String, key=True),
-            SearchableField(name="text", type=SearchFieldDataType.String),
-            SimpleField(name="metadata", type=SearchFieldDataType.String),
-            SimpleField(name="domain_id", type=SearchFieldDataType.String, filterable=True),
-            SearchField(
-                name="embedding",
-                type=SearchFieldDataType.Collection(SearchFieldDataType.Single),
-                searchable=True,
-                vector_search_dimensions=EMBEDDING_DIMENSIONS,
-                vector_search_profile_name="greentrag-vector-profile",
-            ),
-        ]
-        # Filterable / sortable Doubles for numeric top-k (search_by_metric).
-        for metric_name in sorted(NUMERIC_METRIC_FIELDS):
-            fields.append(
-                SimpleField(
-                    name=metric_name,
-                    type=SearchFieldDataType.Double,
-                    filterable=True,
-                    sortable=True,
-                )
-            )
-        vector_search = VectorSearch(
-            algorithms=[HnswAlgorithmConfiguration(name="greentrag-hnsw")],
-            profiles=[
-                VectorSearchProfile(
-                    name="greentrag-vector-profile",
-                    algorithm_configuration_name="greentrag-hnsw",
-                )
-            ],
-        )
-        index = SearchIndex(name=index_name, fields=fields, vector_search=vector_search)
-        client.create_index(index)
-        logger.info("Created Azure AI Search index '%s'.", index_name)
-        return index_name
-
-    def _search_client(self, index_name: str):
-        from azure.core.credentials import AzureKeyCredential
-        from azure.search.documents import SearchClient
-
-        return SearchClient(
-            endpoint=self.search_endpoint,
-            index_name=index_name,
-            credential=AzureKeyCredential(self.search_api_key),
-        )
-
-    def _embed_texts(self, texts: list[str]) -> list[list[float]]:
-        """Embed texts via the configured Azure OpenAI deployment."""
-        if not texts:
-            return []
-        client = self._get_openai()
-        response = client.embeddings.create(
-            model=self.openai_deployment,
-            input=texts,
-        )
-        # Preserve input order.
-        ordered = sorted(response.data, key=lambda item: item.index)
-        return [list(item.embedding) for item in ordered]
-
+    # -- VectorStore API -------------------------------------------------------
     def embed_and_store(self, domain_id: str, chunks: list[dict[str, Any]]) -> None:
-        """Embed and upsert all chunks into the domain Azure AI Search index.
-
-        Uses ``merge_or_upload_documents`` so existing ``chunk_id`` keys are
-        refreshed (text, metadata, metric fields, embedding) and new keys are
-        inserted — no skip-if-exists path.
-        """
-        if not chunks:
-            logger.info("No chunks to store for domain '%s'.", domain_id)
-            return
-
-        valid_chunks = [c for c in chunks if c.get("chunk_id")]
-        if not valid_chunks:
+        """Embed and merge-or-upload chunks into the shared index (existing keys are refreshed)."""
+        valid = [c for c in chunks if c.get("chunk_id")]
+        if not valid:
             logger.info("No chunks with chunk_id for domain '%s'.", domain_id)
             return
-
-        index_name = self._ensure_index(domain_id)
-        search_client = self._search_client(index_name)
-
-        # Batch embeddings to stay within API limits, then merge-or-upload all.
-        batch_size = 16
-        documents: list[dict[str, Any]] = []
-        for start in range(0, len(valid_chunks), batch_size):
-            batch = valid_chunks[start : start + batch_size]
-            texts = [str(c.get("text", "")) for c in batch]
-            vectors = self._embed_texts(texts)
+        self._ensure_index()
+        client = self._search_client()
+        batch_size = 64
+        stored = 0
+        for start in range(0, len(valid), batch_size):
+            batch = valid[start:start + batch_size]
+            vectors = self._embed_texts([str(c.get("text", "")) for c in batch])
+            docs = []
             for chunk, vector in zip(batch, vectors, strict=True):
                 meta = chunk.get("metadata") or {}
                 doc: dict[str, Any] = {
-                    "chunk_id": str(chunk["chunk_id"]),
-                    "text": str(chunk.get("text", "")),
-                    "metadata": json.dumps(meta, ensure_ascii=False),
-                    "domain_id": domain_id,
-                    "embedding": vector,
-                }
-                # Promote numeric metrics to top-level filterable/sortable fields.
+                    "id": doc_key(domain_id, str(chunk["chunk_id"])), "chunk_id": str(chunk["chunk_id"]),
+                    "text": str(chunk.get("text", "")), "metadata": json.dumps(meta, ensure_ascii=False),
+                    "domain_id": domain_id, "embedding": vector}
                 doc.update(extract_metric_fields(meta if isinstance(meta, dict) else {}))
-                documents.append(doc)
+                docs.append(doc)
+            client.merge_or_upload_documents(documents=docs)
+            stored += len(docs)
+        logger.info("Upserted %d chunk(s) of '%s' into Azure index '%s'.", stored, domain_id, self.index_name)
 
-        search_client.merge_or_upload_documents(documents=documents)
-        logger.info(
-            "Upserted %d chunk(s) into Azure index '%s'.",
-            len(documents),
-            index_name,
-        )
+    @staticmethod
+    def _hit(doc: dict, domain_id: str, score: float) -> dict[str, Any]:
+        raw = doc.get("metadata") or "{}"
+        try:
+            metadata = json.loads(raw) if isinstance(raw, str) else raw
+        except json.JSONDecodeError:
+            metadata = {"raw": raw}
+        return {"chunk_id": doc.get("chunk_id"), "domain_id": doc.get("domain_id", domain_id),
+                "text": doc.get("text"), "metadata": metadata if isinstance(metadata, dict) else {}, "score": score}
 
-    def search(
-        self,
-        domain_id: str,
-        query: str,
-        top_k: int,
-    ) -> list[dict[str, Any]]:
-        """Vector-search the domain index for ``query``."""
+    def search(self, domain_id: str, query: str, top_k: int) -> list[dict[str, Any]]:
+        """Vector search restricted to the domain."""
         from azure.search.documents.models import VectorizedQuery
 
-        index_name = self._ensure_index(domain_id)
-        search_client = self._search_client(index_name)
-        query_vector = self._embed_texts([query])[0]
+        self._ensure_index()
+        vq = VectorizedQuery(vector=self._embed_texts([query])[0], k_nearest_neighbors=top_k, fields="embedding")
+        results = self._search_client().search(
+            search_text=None, vector_queries=[vq], filter=f"domain_id eq '{_odata(domain_id)}'",
+            select=["chunk_id", "text", "metadata", "domain_id"], top=top_k)
+        return [self._hit(doc, domain_id, float(doc.get("@search.score") or 0.0)) for doc in results]
 
-        vector_query = VectorizedQuery(
-            vector=query_vector,
-            k_nearest_neighbors=top_k,
-            fields="embedding",
-        )
-        results = search_client.search(
-            search_text=None,
-            vector_queries=[vector_query],
-            select=["chunk_id", "text", "metadata", "domain_id"],
-            top=top_k,
-        )
-
-        hits: list[dict[str, Any]] = []
-        for doc in results:
-            raw_meta = doc.get("metadata") or "{}"
-            try:
-                metadata = json.loads(raw_meta) if isinstance(raw_meta, str) else raw_meta
-            except json.JSONDecodeError:
-                metadata = {"raw": raw_meta}
-            hits.append(
-                {
-                    "chunk_id": doc.get("chunk_id"),
-                    "domain_id": doc.get("domain_id", domain_id),
-                    "text": doc.get("text"),
-                    "metadata": metadata,
-                    "score": float(doc.get("@search.score") or 0.0),
-                }
-            )
-        return hits
-
-    def search_by_metric(
-        self,
-        domain_id: str,
-        metric_field: str,
-        top_k: int,
-        order: str = "desc",
-    ) -> list[dict[str, Any]]:
-        """Rank chunks by a numeric Azure Search field (no embedding search)."""
+    def search_by_metric(self, domain_id: str, metric_field: str, top_k: int, order: str = "desc") -> list[dict[str, Any]]:
+        """Rank the domain's chunks by a numeric field (no embedding search)."""
         metric_field, order = validate_metric_request(metric_field, order)
-        index_name = self._ensure_index(domain_id)
-        search_client = self._search_client(index_name)
-
-        select_fields = [
-            "chunk_id",
-            "text",
-            "metadata",
-            "domain_id",
-            metric_field,
-        ]
-        results = search_client.search(
-            search_text="*",
-            filter=f"{metric_field} ne null",
+        self._ensure_index()
+        results = self._search_client().search(
+            search_text="*", filter=f"domain_id eq '{_odata(domain_id)}' and {metric_field} ne null",
             order_by=[f"{metric_field} {order}"],
-            select=select_fields,
-            top=top_k,
-        )
-
-        hits: list[dict[str, Any]] = []
+            select=["chunk_id", "text", "metadata", "domain_id", metric_field], top=top_k)
+        hits = []
         for doc in results:
-            raw_meta = doc.get("metadata") or "{}"
-            try:
-                metadata = json.loads(raw_meta) if isinstance(raw_meta, str) else raw_meta
-            except json.JSONDecodeError:
-                metadata = {"raw": raw_meta}
-            if not isinstance(metadata, dict):
-                metadata = {}
-            # Ensure the ranking metric is visible in metadata for clients.
-            if metric_field in doc and doc[metric_field] is not None:
-                metadata[metric_field] = float(doc[metric_field])
-            value = float(doc.get(metric_field) or 0.0)
-            hits.append(
-                {
-                    "chunk_id": doc.get("chunk_id"),
-                    "domain_id": doc.get("domain_id", domain_id),
-                    "text": doc.get("text"),
-                    "metadata": metadata,
-                    "score": value,
-                }
-            )
+            hit = self._hit(doc, domain_id, float(doc.get(metric_field) or 0.0))
+            if doc.get(metric_field) is not None:
+                hit["metadata"][metric_field] = float(doc[metric_field])
+            hits.append(hit)
         return hits

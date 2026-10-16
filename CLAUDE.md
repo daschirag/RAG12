@@ -6,7 +6,7 @@ Read PROGRESS.md first after any context reset.
 
 ## How to work (non-negotiable)
 1. One phase at a time. At the end of each phase: run that phase's tests, show the real output, update PROGRESS.md,
-   commit to feature/dev, then STOP until the user types "next". Never start the next phase unprompted.
+   then STOP until the user types "next". Never start the next phase unprompted.
 2. A phase is done only if its tests ran and passed in this session. On failure: show it, fix, re-run.
 3. Never fabricate or estimate results. Every number in a results table comes from a real run in this repo, with
    fixed seeds and raw output saved under `results/`. Report worse-than-baseline results as they are. No cherry-picking.
@@ -21,12 +21,23 @@ Read PROGRESS.md first after any context reset.
    (`src/backend/runtime_env.configure_cache_dirs()` forces HF_HOME/TORCH_HOME there; call it in any entry point
    that loads HF/torch models). Ask before any download > 1GB. Fault data is huge: develop on Wind Farm A, sampled.
 8. Do not break: /health, /system/status, /domains, /domains/{id}, POST /ingest/{id}, /query/{id}, /query/{id}/top,
-   /ask/{id}, the BACKEND_MODE local/azure abstraction, the console UI (src/frontend). `python -m pytest` must pass
+   /ask/{id}, POST /forecast, POST /diagnose, POST /secure-ask, POST /decision, POST /assistant, /ready, /warmup,
+   /results/summary, the BACKEND_MODE local/azure abstraction, the console UIs (src/frontend and src/console at /console/). `python -m pytest` must pass
    after every phase (regression suite: tests/test_api_regression.py, test_backend_mode.py, test_frontend.py,
    test_local_integration.py; test_ollama_integration.py skips if Ollama is down).
 9. Ollama (`ollama serve`) local models: qwen2.5:7b-instruct, llama3.2:3b, nomic-embed-text.
 10. Report figures: matplotlib, black-and-white/grayscale only.
-11. Git: one commit per phase, clear message. Never commit datasets, chroma_db, model weights, .env, logs.
+12. Local mode is the default and the evaluated stack (decision 2026-09-30): threat model, attacks and evaluations
+    (C1-C6) target the local FastAPI + ChromaDB + Ollama stack. **Azure authorised by the user on 2026-10-16, plan A
+    only:** resource group greenragsec-rg (centralindia) with Blob Storage (greenragsecymjvr, containers kbdocs and
+    results), Key Vault (greenragsec-kv-ymjvr), Log Analytics + Application Insights, and AI Search Free
+    (greenragsec-srch-ymjvr). MiniLM embeddings and Ollama stay local; no Azure OpenAI. Budget alert $20/month (user).
+    Secrets only in Key Vault or the git-ignored .env, never in a file in the repo or in output; never print keys,
+    tokens, connection strings or subscription IDs. Creating or changing Azure resources needs the user's approval.
+11. Do not run any git commands. Leave all changes uncommitted.
+    (Rule changed 2026-09-28. Earlier local commits up to 4e586aa stay exactly as they are: no squash, amend,
+    rebase, reset or push. Result files may carry a "-dirty" stamp; `evaluation/provenance.py` reads the commit
+    from .git files directly and never invokes git. The user handles all commits.)
 
 ## Commands
 - Tests: `python -m pytest` (markers: `integration`, `ollama`). Fast subset: `python -m pytest -m "not integration and not ollama"`.
@@ -48,7 +59,11 @@ Read PROGRESS.md first after any context reset.
   Asset column is `asset` in Farm A but `asset_id` in B/C. These are WIND-TURBINE faults (e.g. transformer failure,
   hydraulic group, converter failure), not solar-inverter faults. The plan's fault list (inverter overheating, etc.)
   does not match; derive the taxonomy from event_info.csv (Phase B4). Synthetic solar-inverter faults only if
-  labelled synthetic.
+  labelled synthetic. event_info.csv has 45 anomaly + 50 normal events (README says 44 anomaly). Taxonomy (B1,
+  `src/backend/kb/taxonomy.py`): 13 wind-turbine components. feature_description.csv in farms A/B stores the degree
+  sign as U+FFFD (normalised to ASCII in `kb.taxonomy.load_features`). The README states no license.
+- Knowledge base (B1): `python -m src.backend.kb.build` -> data/processed/knowledge_base/{documents,chunks}.jsonl;
+  domain `knowledge_base`. Synthetic docs carry `synthetic: true` and the `[SYNTHETIC]` marker (schema-enforced).
 - Existing processed chunks: `data/processed/{solar,wind,fault_diagnosis}/chunks.jsonl` (gitignored).
 
 ## Code map

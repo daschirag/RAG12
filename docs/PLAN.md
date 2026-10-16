@@ -1,7 +1,8 @@
 # GreenRAG-Sec implementation plan
 
 Source: `docs/GreenRAG-Sec_Work_Split.docx`. One phase at a time; each phase ends with its tests passing,
-PROGRESS.md updated, one commit on `feature/dev`, and a stop for user approval ("next").
+PROGRESS.md updated, and a stop for user approval ("next"). No git commands are run; all changes are left
+uncommitted for the user.
 
 ## Phase 0 - Setup
 Read the work-split doc; write CLAUDE.md, docs/PLAN.md, PROGRESS.md; create packages
@@ -17,6 +18,14 @@ install pytest; regression tests for existing endpoints.
   empirical coverage and interval width.
 - **A5 Evaluation**: MAE, RMSE, MAPE, R2, coverage, width; comparison table and grayscale plots in
   `results/forecasting/`; honest error analysis (dataset is only ~34 days).
+  - **Rolling-origin (expanding-window) evaluation** across the 34 days: for each successive test day d
+    (after a minimum initial training window), train on all days before d (with the same val/calib carve-out
+    rule at the end of the window), forecast day d, and collect the day-d errors. This gives one out-of-sample
+    score per day and per model instead of a single 5-day test block.
+  - **Paired day-level bootstrap** for model differences: for each pair of models, compute the per-day mean
+    loss difference on the same days, resample days with replacement (fixed seed, e.g. 10,000 resamples), and
+    report the mean difference with a 95% percentile CI and the share of resamples favouring each model.
+    Days, not 15-min rows, are the resampling unit because errors within a day are strongly autocorrelated.
 - **A6 API**: `POST /forecast` -> prediction, lower_bound, upper_bound, confidence; API + schema tests.
 - Wind T1 replication only after user approval.
 

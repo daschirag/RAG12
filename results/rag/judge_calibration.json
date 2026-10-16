@@ -1,0 +1,36 @@
+{
+  "items": 60,
+  "kinds": {
+    "supported": 20,
+    "other_component": 20,
+    "changed_number": 20
+  },
+  "results": {
+    "qwen2.5:7b-instruct": {
+      "n": 60,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "true_positive_rate": 1.0,
+      "true_negative_rate": 1.0,
+      "unparsed": 0,
+      "by_kind": {
+        "supported": 1.0,
+        "changed_number": 1.0,
+        "other_component": 1.0
+      }
+    },
+    "llama3.2:3b": {
+      "n": 60,
+      "accuracy": 0.9,
+      "balanced_accuracy": 0.9125,
+      "true_positive_rate": 0.95,
+      "true_negative_rate": 0.875,
+      "unparsed": 0,
+      "by_kind": {
+        "supported": 0.95,
+        "changed_number": 0.85,
+        "other_component": 0.9
+      }
+    }
+  }
+}

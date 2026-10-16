@@ -1,0 +1,36 @@
+set,item_id,claim,code_verdict,judge_v1_verdict
+greenrag_run2,fault::68::unlogged,Anomaly signal for Wind Farm A turbine 11; evidence points to the hydraulic system.,True,False
+greenrag_run2,fault::68::unlogged,Likely cause: Not established for this incident; the closest evidence concerns hydraulic system (fault-a-73).,True,True
+greenrag_run2,fault::68::unlogged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::72::unlogged,Anomaly signal for Wind Farm A turbine 21; evidence points to the gearbox and gear-oil system.,True,True
+greenrag_run2,fault::72::unlogged,"Likely cause: Logged description for this incident: ""Gearbox bearings damaged"" Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.",True,False
+greenrag_run2,fault::42::unlogged,Anomaly signal for Wind Farm A turbine 10; evidence points to the gearbox and gear-oil system.,True,True
+greenrag_run2,fault::42::unlogged,Likely cause: Not established for this incident; the closest evidence concerns gearbox and gear-oil system (fault-a-10).,True,False
+greenrag_run2,fault::42::unlogged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::84::unlogged,Anomaly signal for Wind Farm A turbine 13; evidence points to the hydraulic system.,True,True
+greenrag_run2,fault::84::unlogged,Likely cause: Not established for this incident; the closest evidence concerns hydraulic system (fault-a-45).,True,True
+greenrag_run2,fault::84::unlogged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::25::logged,Anomaly signal for Wind Farm A turbine 11; evidence points to the transformer.,True,True
+greenrag_run2,fault::25::logged,Likely cause: Not established for this incident; the closest evidence concerns transformer (fault-a-68).,True,True
+greenrag_run2,fault::25::logged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::25::unlogged,Anomaly signal for Wind Farm A turbine 11; evidence points to the transformer.,True,True
+greenrag_run2,fault::25::unlogged,Likely cause: Not established for this incident; the closest evidence concerns transformer (fault-a-68).,True,True
+greenrag_run2,fault::25::unlogged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::24::logged,Anomaly signal for Wind Farm A turbine 0; evidence points to the hydraulic system.,True,True
+greenrag_run2,fault::24::logged,Likely cause: Not established for this incident; the closest evidence concerns hydraulic system (fault-a-26).,True,True
+greenrag_run2,fault::24::logged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::24::unlogged,Anomaly signal for Wind Farm A turbine 0; evidence points to the hydraulic system.,True,True
+greenrag_run2,fault::24::unlogged,Likely cause: Not established for this incident; the closest evidence concerns hydraulic system (fault-a-26).,True,True
+greenrag_run2,fault::24::unlogged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::3::logged,Anomaly signal for Wind Farm A turbine 10; evidence points to the gearbox and gear-oil system.,True,True
+greenrag_run2,fault::3::logged,Likely cause: Not established for this incident; the closest evidence concerns gearbox and gear-oil system (fault-a-10).,True,False
+greenrag_run2,fault::3::logged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::3::unlogged,Anomaly signal for Wind Farm A turbine 10; evidence points to the gearbox and gear-oil system.,True,True
+greenrag_run2,fault::3::unlogged,Likely cause: Not established for this incident; the closest evidence concerns gearbox and gear-oil system (fault-a-10).,True,False
+greenrag_run2,fault::3::unlogged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::17::logged,Anomaly signal for Wind Farm A turbine 10; evidence points to the gearbox and gear-oil system.,True,True
+greenrag_run2,fault::17::logged,Likely cause: Not established for this incident; the closest evidence concerns gearbox and gear-oil system (fault-a-10).,True,False
+greenrag_run2,fault::17::logged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False
+greenrag_run2,fault::17::unlogged,Anomaly signal for Wind Farm A turbine 10; evidence points to the gearbox and gear-oil system.,True,True
+greenrag_run2,fault::17::unlogged,Likely cause: Not established for this incident; the closest evidence concerns gearbox and gear-oil system (fault-a-10).,True,False
+greenrag_run2,fault::17::unlogged,Recommended action: Inspect the turbine; no troubleshooting procedure was retrieved.,True,False

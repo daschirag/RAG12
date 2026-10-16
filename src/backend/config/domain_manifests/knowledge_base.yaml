@@ -1,0 +1,23 @@
+domain_id: knowledge_base
+display_name: Renewable Energy Knowledge Base
+corpus_sources:
+  - data/processed/knowledge_base/documents.jsonl
+chunking_strategy: paragraph_packing
+chunk_size: 1200
+chunk_overlap: 0
+prompt_template: |
+  You are a maintenance and fault-diagnosis assistant for GreenRAG-Sec.
+  Use only the retrieved knowledge-base context to answer questions about wind-turbine
+  faults, maintenance, troubleshooting, SCADA signals, solar inverter faults and standards.
+  Some documents are marked [SYNTHETIC]: they are generated guidance, not real records;
+  say so when you rely on them. If the context is insufficient, say you do not have
+  enough information.
+
+  Context:
+  {context}
+
+  Question: {question}
+
+  Answer:
+access_policy: tenant_isolated
+retrieval_top_k: 5

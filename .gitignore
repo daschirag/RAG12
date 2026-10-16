@@ -62,3 +62,4 @@ cache/
 
 # Supervisor planning document (kept local; plan content is in docs/PLAN.md)
 docs/GreenRAG-Sec_Work_Split.docx
+.env.azure

@@ -315,7 +315,7 @@ class AzureGenerator(Generator):
 
 
 def get_generator() -> Generator:
-    """Return LocalGenerator or AzureGenerator based on ``BACKEND_MODE``."""
+    """LocalGenerator (local mode, or azure mode with GENERATOR_PROVIDER=ollama) or AzureGenerator."""
     mode = (os.getenv("BACKEND_MODE") or "local").strip().lower()
 
     if mode == "local":
@@ -323,6 +323,12 @@ def get_generator() -> Generator:
         return LocalGenerator()
 
     if mode == "azure":
+        from ..settings import get_settings
+
+        if get_settings().generator == "ollama":
+            # plan A: Azure hosts storage, secrets, telemetry and the search index; the LLM stays local
+            logger.info("Answer generator backend: azure mode with local Ollama (GENERATOR_PROVIDER)")
+            return LocalGenerator()
         logger.info("Answer generator backend: azure (Azure OpenAI)")
         return AzureGenerator()
 

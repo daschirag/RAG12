@@ -18,3 +18,9 @@ xgboost
 matplotlib
 statsmodels
 pytest
+pydantic-settings
+httpx
+scikit-learn
+torch
+# docs screenshots only (uses the installed Chrome/Edge, no browser download): scripts/capture_screenshots.py
+playwright

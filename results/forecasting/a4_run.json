@@ -1,0 +1,136 @@
+{
+  "night_rule": "envelope<=0 (strict)",
+  "night_threshold": 0.0,
+  "levels": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "calib_scored_rows": {
+    "1": [
+      188,
+      196
+    ],
+    "2": [
+      192,
+      192
+    ]
+  },
+  "params": [
+    {
+      "plant": 1,
+      "seed": 0,
+      "point": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 226
+      },
+      "quantile": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "best_iteration": 86
+      },
+      "quantile_val_pinball": 325.5442656949014
+    },
+    {
+      "plant": 1,
+      "seed": 1,
+      "point": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 189
+      },
+      "quantile": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 331
+      },
+      "quantile_val_pinball": 325.55140662323447
+    },
+    {
+      "plant": 1,
+      "seed": 2,
+      "point": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 259
+      },
+      "quantile": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "best_iteration": 80
+      },
+      "quantile_val_pinball": 322.91693360201555
+    },
+    {
+      "plant": 2,
+      "seed": 0,
+      "point": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 217
+      },
+      "quantile": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 300
+      },
+      "quantile_val_pinball": 230.04319867700548
+    },
+    {
+      "plant": 2,
+      "seed": 1,
+      "point": {
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "best_iteration": 244
+      },
+      "quantile": {
+        "learning_rate": 0.03,
+        "max_depth": 5,
+        "best_iteration": 329
+      },
+      "quantile_val_pinball": 234.45236002058522
+    },
+    {
+      "plant": 2,
+      "seed": 2,
+      "point": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "best_iteration": 77
+      },
+      "quantile": {
+        "learning_rate": 0.1,
+        "max_depth": 5,
+        "best_iteration": 107
+      },
+      "quantile_val_pinball": 231.58127077294768
+    }
+  ],
+  "environment": {
+    "timestamp_utc": "2026-09-28T20:25:34+00:00",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git_commit": "4e586aa-dirty",
+    "git_dirty_checked": false,
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.2.0",
+      "torch": "2.13.0",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "sentence-transformers": "5.7.0",
+      "chromadb": "1.5.9",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4"
+    }
+  }
+}

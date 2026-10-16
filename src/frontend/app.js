@@ -328,6 +328,146 @@ async function ask() {
   }
 }
 
+// ---- I2 assistant panel (POST /assistant): trust decision, forecast interval, diagnosis ----
+const asst = {
+  input: document.getElementById("assistant-input"),
+  config: document.getElementById("assistant-config"),
+  asset: document.getElementById("assistant-asset"),
+  origin: document.getElementById("assistant-origin"),
+  confidence: document.getElementById("assistant-confidence"),
+  event: document.getElementById("assistant-event"),
+  btn: document.getElementById("assistant-btn"),
+  result: document.getElementById("assistant-result"),
+  trustCard: document.getElementById("trust-card"),
+  trustNone: document.getElementById("trust-none"),
+  badge: document.getElementById("decision-badge"),
+  score: document.getElementById("trust-score"),
+  components: document.getElementById("trust-components"),
+  reasons: document.getElementById("trust-reasons"),
+  chart: document.getElementById("forecast-chart"),
+  diag: document.getElementById("diagnosis-card"),
+  text: document.getElementById("assistant-text"),
+  meta: document.getElementById("assistant-meta"),
+  error: document.getElementById("assistant-error"),
+};
+
+async function postJson(url, body) {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const detail = data.detail || res.statusText;
+    throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
+  }
+  return data;
+}
+
+function renderTrust(trust) {
+  if (!trust) {
+    asst.trustCard.classList.add("is-hidden");
+    asst.trustNone.classList.remove("is-hidden");
+    return;
+  }
+  asst.trustNone.classList.add("is-hidden");
+  asst.trustCard.classList.remove("is-hidden");
+  asst.badge.className = `decision-badge is-${trust.decision}`;
+  asst.badge.textContent = trust.decision;
+  asst.score.textContent = Number(trust.trust_score).toFixed(3);
+  asst.components.innerHTML = ["E", "R", "C", "S"]
+    .map((k) => {
+      const v = Math.max(0, Math.min(1, Number(trust.components[k] || 0)));
+      const w = trust.weights && trust.weights[k] !== undefined ? ` w${Number(trust.weights[k]).toFixed(2)}` : "";
+      return `<div class="trust-bar" title="${k}${w}"><span>${k}</span>
+        <div class="trust-bar-track"><div class="trust-bar-fill" style="width:${(v * 100).toFixed(1)}%"></div></div>
+        <span>${v.toFixed(3)}</span></div>`;
+    })
+    .join("");
+  asst.reasons.innerHTML = (trust.reasons || []).map((r) => `<li>${escapeHtml(r)}</li>`).join("");
+}
+
+function renderForecastChart(fc, observed) {
+  if (!fc) {
+    asst.chart.classList.add("is-hidden");
+    asst.chart.innerHTML = "";
+    return;
+  }
+  const values = [fc.lower_bound, fc.prediction, fc.upper_bound].concat(
+    typeof observed === "number" ? [observed] : []
+  );
+  const max = Math.max(...values, 1) * 1.1;
+  const x = (v) => 20 + (360 * v) / max;
+  const obs = typeof observed === "number"
+    ? `<circle class="fc-obs" cx="${x(observed).toFixed(1)}" cy="30" r="4"><title>observed ${observed.toFixed(0)} kW</title></circle>`
+    : "";
+  asst.chart.innerHTML = `
+    <svg viewBox="0 0 400 70" role="img" aria-label="Forecast interval">
+      <line class="fc-axis" x1="20" y1="52" x2="380" y2="52" />
+      <rect class="fc-interval" x="${x(fc.lower_bound).toFixed(1)}" y="16"
+        width="${Math.max(1, x(fc.upper_bound) - x(fc.lower_bound)).toFixed(1)}" height="28" />
+      <line class="fc-edge" x1="${x(fc.lower_bound).toFixed(1)}" y1="16" x2="${x(fc.lower_bound).toFixed(1)}" y2="44" />
+      <line class="fc-edge" x1="${x(fc.upper_bound).toFixed(1)}" y1="16" x2="${x(fc.upper_bound).toFixed(1)}" y2="44" />
+      <line class="fc-pred" x1="${x(fc.prediction).toFixed(1)}" y1="12" x2="${x(fc.prediction).toFixed(1)}" y2="48" />
+      ${obs}
+      <text class="fc-label" x="20" y="66">0 kW</text>
+      <text class="fc-label" x="380" y="66" text-anchor="end">${max.toFixed(0)} kW</text>
+      <text class="fc-label" x="${x(fc.prediction).toFixed(1)}" y="9" text-anchor="middle">${fc.prediction.toFixed(0)}</text>
+    </svg>
+    <p class="hint">${Math.round(fc.confidence * 100)}% interval [${fc.lower_bound.toFixed(0)}, ${fc.upper_bound.toFixed(0)}] kW
+      (nominal coverage, not a probability that the point forecast is right)</p>`;
+  asst.chart.classList.remove("is-hidden");
+}
+
+function renderDiagnosis(out, handledBy) {
+  if (handledBy !== "fault_diagnosis") {
+    asst.diag.classList.add("is-hidden");
+    return;
+  }
+  const sev = out.severity || "undetermined";
+  const conf = out.confidence ? out.confidence.level : "-";
+  asst.diag.innerHTML = `<strong>${escapeHtml(out.diagnosis || "")}</strong>
+    <span class="severity-chip severity-${escapeHtml(sev)}">severity ${escapeHtml(sev)}</span>
+    <span class="severity-chip">confidence ${escapeHtml(conf)}</span>`;
+  asst.diag.classList.remove("is-hidden");
+}
+
+async function runAssistant() {
+  const body = { message: asst.input.value.trim(), config: asst.config.value };
+  if (asst.origin.value.trim()) {
+    body.origin = asst.origin.value.trim();
+    body.asset = asst.asset.value;
+    body.confidence = Number(asst.confidence.value);
+  }
+  if (asst.event.value.trim()) {
+    body.event_id = Number(asst.event.value);
+  }
+  asst.btn.disabled = true;
+  asst.result.classList.remove("is-hidden");
+  asst.error.classList.add("is-hidden");
+  asst.text.innerHTML = `<p class="answer-lede" style="color:var(--text-muted)">Running…</p>`;
+  try {
+    const data = await postJson(`${API_BASE}/assistant`, body);
+    renderTrust(data.trust);
+    renderForecastChart(data.forecast, data.output ? data.output.observed_kw : null);
+    renderDiagnosis(data.output || {}, data.handled_by);
+    asst.text.innerHTML = renderAnswerHtml(data.text);
+    asst.meta.textContent = `config ${data.config} · intent ${data.intent} · handled by ${data.handled_by}`;
+  } catch (err) {
+    asst.text.innerHTML = "";
+    asst.trustCard.classList.add("is-hidden");
+    asst.chart.classList.add("is-hidden");
+    asst.diag.classList.add("is-hidden");
+    asst.error.textContent = err.message || String(err);
+    asst.error.classList.remove("is-hidden");
+  } finally {
+    asst.btn.disabled = false;
+  }
+}
+
+asst.btn.addEventListener("click", runAssistant);
+
 els.askBtn.addEventListener("click", ask);
 els.queryInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {

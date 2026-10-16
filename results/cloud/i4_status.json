@@ -1,0 +1,17 @@
+{
+  "usable": true,
+  "settings_present": {
+    "AZURE_SEARCH_ENDPOINT": true,
+    "AZURE_SEARCH_INDEX": true,
+    "AZURE_KEY_VAULT_URL": true,
+    "AZURE_STORAGE_ACCOUNT_URL": true
+  },
+  "env_file": true,
+  "status": "READY",
+  "reasons": [
+    "Azure plan A authorised by the user on 2026-10-16 (CLAUDE.md rule 12); the I4 harness runs only with these settings present"
+  ],
+  "timestamp_utc": "2026-10-16T15:03:16+00:00",
+  "settings_file": ".env.azure (non-secret; secrets in Key Vault)",
+  "measurements": "results/cloud/i4_status.md, i4_summary.json"
+}

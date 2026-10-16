@@ -1,0 +1,276 @@
+{
+  "timestamp_utc": "2026-10-16T10:41:15+00:00",
+  "steps": [
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "A1 preprocessing",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.preprocess_solar"
+    },
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "A2 features",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.features_solar"
+    },
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "A3 models",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.train_forecasters"
+    },
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "A4 uncertainty",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.uncertainty_solar"
+    },
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "A5 rolling origin",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.rolling_origin"
+    },
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "A5 evaluation",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.evaluate_forecasting"
+    },
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "Wind rolling origin",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.wind_rolling"
+    },
+    {
+      "experiment": "1",
+      "title": "Forecasting (solar A1-A6, wind T1)",
+      "step": "Wind evaluation",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.wind_evaluate"
+    },
+    {
+      "experiment": "2",
+      "title": "Retrieval (B2 chunking, B3 retrievers)",
+      "step": "B2 chunking comparison",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.chunking_comparison"
+    },
+    {
+      "experiment": "2",
+      "title": "Retrieval (B2 chunking, B3 retrievers)",
+      "step": "B3 retrieval comparison",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.retrieval_comparison"
+    },
+    {
+      "experiment": "3",
+      "title": "Fault diagnosis (B4 detectors, B5 diagnosis -> RAG)",
+      "step": "B4 fault diagnosis",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.fault_diagnosis"
+    },
+    {
+      "experiment": "3",
+      "title": "Fault diagnosis (B4 detectors, B5 diagnosis -> RAG)",
+      "step": "B4 IF threshold",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.fault_threshold"
+    },
+    {
+      "experiment": "3",
+      "title": "Fault diagnosis (B4 detectors, B5 diagnosis -> RAG)",
+      "step": "B5 fault RAG",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": true,
+      "command": "python -m experiments.fault_rag"
+    },
+    {
+      "experiment": "4",
+      "title": "Hallucination (B6 RAG evaluation)",
+      "step": "B6 run 1",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": true,
+      "command": "python -m experiments.rag_evaluation"
+    },
+    {
+      "experiment": "4",
+      "title": "Hallucination (B6 RAG evaluation)",
+      "step": "B6 run 2",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": true,
+      "command": "python -m experiments.rag_evaluation --run2"
+    },
+    {
+      "experiment": "4",
+      "title": "Hallucination (B6 RAG evaluation)",
+      "step": "B6 follow-up",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": true,
+      "command": "python -m experiments.b6_followup"
+    },
+    {
+      "experiment": "5",
+      "title": "Cyberattack on telemetry (C2 FDI/spoofing, C3 detector, C6 telemetry)",
+      "step": "C2 telemetry attacks",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.attack_simulation --part telemetry"
+    },
+    {
+      "experiment": "5",
+      "title": "Cyberattack on telemetry (C2 FDI/spoofing, C3 detector, C6 telemetry)",
+      "step": "C3 telemetry detector",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.detector_evaluation --part telemetry"
+    },
+    {
+      "experiment": "5",
+      "title": "Cyberattack on telemetry (C2 FDI/spoofing, C3 detector, C6 telemetry)",
+      "step": "C6 telemetry re-run (CPU)",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.security_evaluation --part telemetry"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C2 knowledge, qwen",
+      "state": "complete",
+      "detail": "594/594 items",
+      "heavy": true,
+      "command": "python -m experiments.attack_simulation --part knowledge"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C2 knowledge, llama",
+      "state": "complete",
+      "detail": "594/594 items",
+      "heavy": true,
+      "command": "python -m experiments.attack_simulation --part knowledge --model llama3.2:3b"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C3 text + trust",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.detector_evaluation --part text"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C3 evidence filter",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.detector_evaluation --part filter"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C4 secure pipeline, llama",
+      "state": "complete",
+      "detail": "330/330 items",
+      "heavy": true,
+      "command": "python -m experiments.secure_pipeline_eval --model llama3.2:3b"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C5 decision engine (llama capture)",
+      "state": "complete",
+      "detail": "330/330 items",
+      "heavy": true,
+      "command": "python -m experiments.decision_engine_eval --llm llama3.2:3b"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C6 capture, qwen",
+      "state": "complete",
+      "detail": "330/330 items",
+      "heavy": true,
+      "command": "python -m experiments.security_evaluation --part capture"
+    },
+    {
+      "experiment": "6",
+      "title": "KB poisoning (C2 knowledge, C3 trust/filter, C4 secure pipeline, C5 engine, C6)",
+      "step": "C6 qwen judge",
+      "state": "complete",
+      "detail": "run record 'judge' in security/c6_run.json",
+      "heavy": true,
+      "command": "python -m experiments.security_evaluation --part judge"
+    },
+    {
+      "experiment": "7",
+      "title": "Prompt injection (C2 query/KB injection, C3 detector, C6 held-out phrasings)",
+      "step": "C6 held-out injections, qwen",
+      "state": "complete",
+      "detail": "990/990 items",
+      "heavy": true,
+      "command": "python -m experiments.security_evaluation --part heldout"
+    },
+    {
+      "experiment": "7",
+      "title": "Prompt injection (C2 query/KB injection, C3 detector, C6 held-out phrasings)",
+      "step": "C6 report",
+      "state": "complete",
+      "detail": "outputs present",
+      "heavy": false,
+      "command": "python -m experiments.security_evaluation --report"
+    },
+    {
+      "experiment": "A-F",
+      "title": "Ablation configs A-F (orchestrator, src/backend/orchestrator.py)",
+      "step": "Ablation A-F",
+      "state": "manual",
+      "detail": "no ablation experiment has been designed or run: needs an LLM run per config (A-F) on a fixed item set; not started without a decision on items and budget",
+      "heavy": false,
+      "command": "python -m experiments.ablation"
+    }
+  ],
+  "this_run": []
+}

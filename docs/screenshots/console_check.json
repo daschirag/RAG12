@@ -1,0 +1,47 @@
+{
+  "assistant": {
+    "errors": [],
+    "seconds": 8.2,
+    "horizontal_overflow_px": 0
+  },
+  "forecast": {
+    "errors": [],
+    "seconds": 1.7,
+    "horizontal_overflow_px": 0
+  },
+  "diagnosis": {
+    "errors": [],
+    "seconds": 8.7,
+    "horizontal_overflow_px": 0
+  },
+  "lab": {
+    "errors": [],
+    "seconds": 2.4,
+    "horizontal_overflow_px": 0
+  },
+  "lab_injection": {
+    "errors": [],
+    "seconds": 1.1,
+    "horizontal_overflow_px": 0
+  },
+  "lab_poisoning": {
+    "errors": [],
+    "seconds": 2.5,
+    "horizontal_overflow_px": 0
+  },
+  "lab_heldout": {
+    "errors": [],
+    "seconds": 1.0,
+    "horizontal_overflow_px": 0
+  },
+  "results": {
+    "errors": [],
+    "seconds": 1.7,
+    "horizontal_overflow_px": 0
+  },
+  "about": {
+    "errors": [],
+    "seconds": 1.4,
+    "horizontal_overflow_px": 0
+  }
+}

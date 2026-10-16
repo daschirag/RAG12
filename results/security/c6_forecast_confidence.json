@@ -1,0 +1,23 @@
+{
+  "solar_plant1": {
+    "nominal": 0.9,
+    "empirical_coverage": 0.8928359976317348,
+    "ci_low": 0.8534278959810875,
+    "C": 0.5342789598108745,
+    "replay_coverage": 0.7606837606837606
+  },
+  "solar_plant2": {
+    "nominal": 0.9,
+    "empirical_coverage": 0.90625,
+    "ci_low": 0.8726851851851851,
+    "C": 0.726851851851851,
+    "replay_coverage": 0.9305555555555555
+  },
+  "wind_t1": {
+    "nominal": 0.9,
+    "empirical_coverage": 0.8903449683608899,
+    "ci_low": 0.8689506799616279,
+    "C": 0.6895067996162787,
+    "replay_coverage": 0.6989730904729781
+  }
+}

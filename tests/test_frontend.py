@@ -52,3 +52,24 @@ def test_app_js_calls_existing_routes():
     ):
         assert f"${{API_BASE}}{used}" in js
         assert route in paths
+
+
+ASSISTANT_IDS = {
+    "assistant-input", "assistant-config", "assistant-asset", "assistant-origin", "assistant-confidence",
+    "assistant-event", "assistant-btn", "assistant-result", "trust-card", "decision-badge", "trust-score",
+    "trust-components", "trust-reasons", "forecast-chart", "diagnosis-card", "assistant-text",
+}
+
+
+def test_assistant_panel_shows_trust_decision_and_forecast_interval():
+    """I2: the console posts to /assistant and renders the decision, trust score, components and interval."""
+    html, js = _read("index.html"), _read("app.js")
+    assert ASSISTANT_IDS <= set(re.findall(r'id="([^"]+)"', html))
+    assert "${API_BASE}/assistant" in js and "/assistant" in {r.path for r in main.app.routes}
+    for field in ("trust.decision", "trust.trust_score", "trust.components", "fc.lower_bound", "fc.upper_bound",
+                  "fc.prediction"):
+        assert field in js
+    for decision in ("accept", "review", "reject"):
+        assert f".decision-badge.is-{decision}" in _read("styles.css")
+    for cfg in "ABCDEF":
+        assert f'<option value="{cfg}"' in html
